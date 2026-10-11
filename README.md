@@ -1,5 +1,8 @@
 # Abetworks Hub
 
+![CI](https://github.com/coding4vinayak/aw-abethub/actions/workflows/ci.yml/badge.svg)
+
+
 35 single-feature micro-SaaS tools: 5 free lead magnets + 30 paid-preview tools.
 One deployable Next.js app; every tool route is independent.
 
