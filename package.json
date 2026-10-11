@@ -1,0 +1,18 @@
+{
+  "name": "abetworks-hub",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev -p ${PORT:-3900}",
+    "build": "next build",
+    "start": "next start -p ${PORT:-3900}"
+  },
+  "dependencies": {
+    "next": "16.3.4",
+    "react": "19.3.0",
+    "react-dom": "19.3.0"
+  },
+  "engines": {
+    "node": "22.x"
+  }
+}

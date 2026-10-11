@@ -1,0 +1,9 @@
+node_modules/
+.next/
+data/
+nohup.out
+*.log
+
+# real secrets never get committed; the example file is the contract
+.env*
+!.env.example

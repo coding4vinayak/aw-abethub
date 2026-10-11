@@ -1,0 +1,17 @@
+services:
+  - type: web
+    name: abetworks-hub
+    runtime: node
+    plan: free
+    region: singapore
+    buildCommand: npm ci && npm run build
+    startCommand: npm run start
+    healthCheckPath: /
+    envVars:
+      - key: NODE_VERSION
+        value: "22"
+    # Leads are written to /data; the disk keeps them across restarts/deploys.
+    disks:
+      - name: hub-data
+        path: /data
+        sizeGB: 1
