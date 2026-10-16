@@ -119,7 +119,7 @@ export default function SupportQAWidget() {
             </div>
           )}
 
-          <p className="cap-note">Free preview grades 3 tickets. SupportQA paid scores 100% of volume, trends per agent and week, and exports to your helpdesk.</p>
+          <p className="cap-note">Free preview grades 3 tickets. The planned SupportQA scores 100% of volume, trends per agent and week, and exports to your helpdesk.</p>
         </div>
       )}
     </>

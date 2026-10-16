@@ -69,9 +69,9 @@ export default function ContractScanWidget() {
             </div>
           ))}
           <p className="cap-note">
-            Preview analyzes {shown.length} of {res.totalFindings} flagged clauses per scan. ContractScan paid
+            Preview analyzes {shown.length} of {res.totalFindings} flagged clauses per scan. The planned ContractScan
             uploads full PDFs, runs every detector plus jurisdiction checks, exports a redline list and keeps a
-            risk history per vendor — from $19/mo.
+            risk history per vendor — planned from $19/mo.
           </p>
         </div>
       )}

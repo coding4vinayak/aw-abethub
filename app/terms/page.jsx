@@ -37,8 +37,10 @@ export default function Terms() {
 
       <h2 style={H}>Subscriptions</h2>
       <p style={P}>
-        Paid plans are month-to-month, cancel anytime from the product, no lock-in. Trial periods convert
-        only with a card on file and an advance notice email. We don’t charge hidden fees.
+        Nothing on the hub is purchasable today — the paid tiers are previews of products in build-out.
+        When they open, plans will be month-to-month, cancellable anytime from the product, no lock-in,
+        and trial periods will convert only with a card on file and an advance notice email. We don’t
+        charge hidden fees.
       </p>
 
       <h2 style={H}>Liability</h2>

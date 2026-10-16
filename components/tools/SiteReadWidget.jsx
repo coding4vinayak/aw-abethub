@@ -101,7 +101,7 @@ export default function SiteReadWidget() {
             <p style={{ marginTop: 14 }}>No blockers found — AI engines can read this page well.</p>
           )}
 
-          <p className="cap-note">This is the full free audit — 11 weighted signals, 6 engine verdicts, one URL at a time, unlimited runs. AnswerReady monitors every page continuously and tells you when an AI engine stops citing you.</p>
+          <p className="cap-note">This is the full free audit — 11 weighted signals, 6 engine verdicts, one URL at a time, unlimited runs. The planned AnswerReady monitors every page continuously and tells you when an AI engine stops citing you.</p>
         </div>
       )}
     </>

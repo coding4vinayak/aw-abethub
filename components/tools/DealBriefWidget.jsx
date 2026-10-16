@@ -120,7 +120,7 @@ export default function DealBriefWidget() {
             </table>
           ) : <p style={{ color: 'var(--ink-3)' }}>No objection keywords found — listen for budget/competitor pushback.</p>}
 
-          <p className="cap-note">Free preview reads up to 3,000 words and shows the top actions. DealBrief paid removes the word cap and exports CRM-ready fields (stage, close date, owner) straight into your pipeline.</p>
+          <p className="cap-note">Free preview reads up to 3,000 words and shows the top actions. The planned DealBrief removes the word cap and exports CRM-ready fields (stage, close date, owner) straight into your pipeline.</p>
         </div>
       )}
     </>

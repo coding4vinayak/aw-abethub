@@ -97,7 +97,7 @@ export default function ChurnSignalWidget() {
               ))}
             </tbody>
           </table>
-          <p className="cap-note">Preview shows the top 5 of {total}. ChurnSignal ranks every account, exports the full report, and tracks risk movement week over week.</p>
+          <p className="cap-note">Preview shows the top 5 of {total}. The planned ChurnSignal ranks every account, exports the full report, and tracks risk movement week over week.</p>
         </div>
       )}
     </>

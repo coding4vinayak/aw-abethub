@@ -3,16 +3,18 @@ import Link from 'next/link';
 
 export default function ToolShell({ tool, children, howItWorks = [], capture }) {
   const paid = tool.tier !== 'free';
+  // Only the free tools carry a real offer: everything marked "paid" is a
+  // working preview of a product still in build-out, and structured data
+  // claiming a purchasable price for it would describe a sale nobody can make.
   const jsonLd = {
     '@context': 'https://schema.org',
     '@type': 'SoftwareApplication',
     name: tool.name,
     description: tool.desc,
     applicationCategory: 'BusinessApplication',
-    offers:
-      tool.tier === 'free'
-        ? { '@type': 'Offer', price: '0', priceCurrency: 'USD' }
-        : { '@type': 'Offer', price: tool.price.replace(/[^0-9.]/g, ''), priceCurrency: 'USD' },
+    ...(tool.tier === 'free'
+      ? { offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' } }
+      : {}),
   };
 
   const steps = howItWorks.length
@@ -20,7 +22,7 @@ export default function ToolShell({ tool, children, howItWorks = [], capture }) 
     : [
         'Paste or upload your input — no account, no onboarding call.',
         `${tool.name} runs real checks and scoring models, not a fake demo.`,
-        'See genuine results instantly; the paid version unlocks depth, history and automation.',
+        'See genuine results instantly — the full version (accounts, history, schedules) is in build-out; leave your email and we’ll tell you when it ships.',
       ];
 
   const faqs = [
@@ -30,7 +32,7 @@ export default function ToolShell({ tool, children, howItWorks = [], capture }) 
     },
     {
       q: 'Is the free preview real or a demo?',
-      a: `Real. ${tool.name} runs the same engines the paid product uses${paid ? ' — the free preview just shows a capped slice of the full output' : ''}. No fabricated numbers, no fake screenshots.`,
+      a: `Real. ${tool.name} runs the real engine — checks, scoring and parsing rules, not a mocked-up demo${paid ? ', and the full version will simply lift the caps you see on this page' : ''}. No fabricated numbers, no fake screenshots.`,
     },
     {
       q: 'Is my data stored?',
@@ -42,8 +44,8 @@ export default function ToolShell({ tool, children, howItWorks = [], capture }) 
     },
     paid
       ? {
-          q: `What do I get for the money?`,
-          a: `The full uncapped output of this check, on your whole dataset, on a schedule, with history — plus alerts when things change. Start with ${tool.upsell.name} (${tool.upsell.price}) or see the whole Abetworks suite.`,
+          q: `Can I buy ${tool.name} yet?`,
+          a: `Not yet. This page is a working preview — the engine is real, but accounts, schedules, history and alerts are still in build-out and nothing on this hub is purchasable today. Leave your email in the box above and we’ll tell you the day it ships. The nearest Abetworks product you can start on today is ${tool.upsell.name} (${tool.upsell.price}).`,
         }
       : {
           q: 'Why is this free?',
@@ -76,6 +78,7 @@ export default function ToolShell({ tool, children, howItWorks = [], capture }) 
         <div className="trust-strip">
           <span>✓ No signup</span>
           <span>✓ Real engines, not a demo</span>
+          {paid && <span>✓ Preview — the paid tier is in build-out</span>}
           <span>✓ Nothing uploaded unless you ask</span>
         </div>
       </div>
@@ -87,10 +90,10 @@ export default function ToolShell({ tool, children, howItWorks = [], capture }) 
             tool={tool.slug}
             headline={
               tool.tier === 'free'
-                ? 'Want the full report?'
-                : 'Get the full version emailed to you'
+                ? 'Want this report, plus one fix tip?'
+                : 'Get early access when it ships'
             }
-            sub="We'll send your complete result plus one tip to fix the biggest gap. No newsletter, no spam."
+            sub="We’ll follow up with your complete result plus one tip to fix the biggest gap. No newsletter, no spam."
           />
         )}
       </div>
@@ -116,7 +119,9 @@ export default function ToolShell({ tool, children, howItWorks = [], capture }) 
         <div>
           <p className="eyebrow" style={{ color: '#a5b4fc', marginTop: 0 }}>Part of the Abetworks suite</p>
           <h4>{tool.upsell.name} — {tool.upsell.price}</h4>
-          <p>Run this on your whole pipeline, on a schedule, with history and alerts.</p>
+          <p>{paid
+            ? `The full ${tool.name} is in build-out. Until it ships, ${tool.upsell.name} is the next-best Abetworks tool for this job.`
+            : `${tool.upsell.name} is the next step when a single free check is not enough.`}</p>
         </div>
         <a href={tool.upsell.href.startsWith('/') ? `${tool.upsell.href}?src=hub-${tool.slug}` : tool.upsell.href}>
           Try {tool.upsell.name} →

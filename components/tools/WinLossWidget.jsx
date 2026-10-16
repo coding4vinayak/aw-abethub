@@ -126,7 +126,7 @@ export default function WinLossWidget() {
             </div>
           )}
 
-          <p className="cap-note">Free preview: top 3 themes{res.hidden > 0 ? ` (${res.hidden} more found but hidden)` : ''}. Paid WinLoss adds quarterly reports, CRM field ingest and win-side theme comparison.</p>
+          <p className="cap-note">Free preview: top 3 themes{res.hidden > 0 ? ` (${res.hidden} more found but hidden)` : ''}. The planned WinLoss adds quarterly reports, CRM field ingest and win-side theme comparison.</p>
         </div>
       )}
     </>

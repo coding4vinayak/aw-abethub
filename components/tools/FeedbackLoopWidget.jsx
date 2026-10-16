@@ -78,7 +78,7 @@ export default function FeedbackLoopWidget() {
             Intent mix: {Object.entries(res.intentMix).filter(([, n]) => n > 0).map(([k, n]) => `${n} ${k}`).join(' · ') || 'no strong intents detected'}
           </p>
 
-          <p className="cap-note">Preview ranks the top 4 themes from one batch. FeedbackLoop paid ingests continuously (app, email, in-product), dedupes, and charts each theme&apos;s sentiment per release.</p>
+          <p className="cap-note">Preview ranks the top 4 themes from one batch. The planned FeedbackLoop ingests continuously (app, email, in-product), dedupes, and charts each theme&apos;s sentiment per release.</p>
         </div>
       )}
     </>

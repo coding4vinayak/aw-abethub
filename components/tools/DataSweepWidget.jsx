@@ -400,7 +400,7 @@ export default function DataSweepWidget() {
             </tbody>
           </table>
 
-          <p className="cap-note">Preview shows the first 10 issue types. DataSweep paid adds one-click fix rules (dedupe merge, title-case, whitespace trim) and writes the cleaned rows straight back to your CRM.</p>
+          <p className="cap-note">Preview shows the first 10 issue types. The planned DataSweep adds one-click fix rules (dedupe merge, title-case, whitespace trim) and writes the cleaned rows straight back to your CRM.</p>
         </div>
       )}
 

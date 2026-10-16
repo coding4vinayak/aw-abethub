@@ -316,8 +316,8 @@ export default function ScopeLockWidget() {
 
           <p className="cap-note">
             Preview matches {shown.length} of {res.rows.length} requests against your SOW and drafts change orders you have to
-            paste yourself. ScopeLock paid matches the full thread, auto-drafts the change order in your template and sends the
-            client an approve-or-decline link with an audit trail — from $9/mo.
+            paste yourself. The planned ScopeLock matches the full thread, auto-drafts the change order in your template and sends the
+            client an approve-or-decline link with an audit trail — planned from $9/mo.
           </p>
         </div>
       )}

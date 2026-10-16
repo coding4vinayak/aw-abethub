@@ -192,7 +192,7 @@ export default function TaxReadyWidget() {
               ))}
             </tbody>
           </table>
-          <p className="cap-note">Free preview: top 5 checks from 5 summary numbers. Paid TaxReady ingests your full purchase/sales ledger, reconciles every invoice against 2B, and exports a CA-ready report.</p>
+          <p className="cap-note">Free preview: top 5 checks from 5 summary numbers. The planned TaxReady ingests your full purchase/sales ledger, reconciles every invoice against 2B, and exports a CA-ready report.</p>
         </div>
       )}
     </>

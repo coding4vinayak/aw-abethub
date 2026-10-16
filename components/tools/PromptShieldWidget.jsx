@@ -140,9 +140,9 @@ export default function PromptShieldWidget() {
           )}
 
           <p className="cap-note">
-            The free scan covers one text at a time and shows the top {shown.length} of {res.totalHits} hits. PromptShield paid
+            The free scan covers one text at a time and shows the top {shown.length} of {res.totalHits} hits. The planned PromptShield
             is a runtime firewall API — every agent request and response scanned in line, with allowlists, redaction hooks and
-            a per-payload audit log — from $19/mo.
+            a per-payload audit log — planned from $19/mo.
           </p>
         </div>
       )}

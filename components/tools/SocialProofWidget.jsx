@@ -242,7 +242,7 @@ export default function SocialProofWidget() {
               <pre style={{ margin: 0, padding: '12px 14px', borderRadius: 10, background: 'var(--ink)', color: '#e5e7eb', fontSize: 12, overflowX: 'auto', lineHeight: 1.5 }}>{embed}</pre>
             </>
           )}
-          <p className="cap-note">Free preview: 3 rows. Paid SocialProof pulls a live data feed, adds targeting/frequency rules, and removes the branding tag.</p>
+          <p className="cap-note">Free preview: 3 rows. The planned SocialProof pulls a live data feed, adds targeting/frequency rules, and removes the branding tag.</p>
         </div>
       )}
     </>

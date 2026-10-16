@@ -67,7 +67,7 @@ export default function EmailAuditWidget() {
             <span style={{ fontWeight: 400, color: 'var(--ink-3)', fontSize: 12 }}> · {res.source === 'ai' ? 'AI rewrite' : 'template rewrite'}</span>
           </div>
 
-          <p className="cap-note">This is the content side. EmailAudit paid adds the domain side — real DNS + blacklist checks (see the free <a href="https://hub.abetworks.in/emailhealth">Email Health check</a>) — plus a sending warmup plan for cold domains.</p>
+          <p className="cap-note">This is the content side. The planned EmailAudit adds the domain side — real DNS + blacklist checks (see the free <a href="https://hub.abetworks.in/emailhealth">Email Health check</a>) — plus a sending warmup plan for cold domains.</p>
         </div>
       )}
     </>

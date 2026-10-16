@@ -66,7 +66,7 @@ export default function ColdOpenerWidget() {
               Grounded in real text from {res.domain}: “{res.phrase}”
             </span>
           </div>
-          <p className="cap-note">The full researched opener — unlimited runs, no signup. ColdAngle adds 10 angles per prospect, subject lines and the follow-up sequence.</p>
+          <p className="cap-note">The full researched opener — unlimited runs, no signup. The planned ColdAngle adds 10 angles per prospect, subject lines and the follow-up sequence.</p>
         </div>
       )}
     </>

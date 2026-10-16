@@ -85,8 +85,8 @@ export default function BrandVoiceWidget() {
             </div>
           )}
           <p className="cap-note">
-            The full 6-metric fingerprint is free to run, one text at a time. BrandVoice paid trains persistent voice
-            profiles, auto-rewrites off-brand drafts into your voice, and scores per-channel (email vs social vs docs) — from $12/mo.
+            The full 6-metric fingerprint is free to run, one text at a time. The planned BrandVoice trains persistent voice
+            profiles, auto-rewrites off-brand drafts into your voice, and scores per-channel (email vs social vs docs) — planned from $12/mo.
           </p>
         </div>
       )}

@@ -179,7 +179,7 @@ export default function ChurnPeekWidget() {
               ))}
             </tbody>
           </table>
-          <p className="cap-note">Every account scored, every factor shown — this is the full free model, unlimited files. ChurnSignal adds save-plays per customer and risk-over-time tracking.</p>
+          <p className="cap-note">Every account scored, every factor shown — this is the full free model, unlimited files. The planned ChurnSignal adds save-plays per customer and risk-over-time tracking.</p>
         </div>
       )}
     </>
