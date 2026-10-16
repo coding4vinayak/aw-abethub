@@ -64,13 +64,12 @@ export default function OnboardFlowWidget() {
   const steps = useMemo(() => parseSteps(stepsText), [stepsText]);
 
   // effective display order: custom order while it still matches the parsed set, else parse order
-  const idsKey = steps.map((s) => s.id).join(',');
   const ordered = useMemo(() => {
     if (order && order.length === steps.length && steps.every((s) => order.includes(s.id))) {
       return order.map((id) => steps.find((s) => s.id === id)).filter(Boolean);
     }
     return steps;
-  }, [order, idsKey, steps]);
+  }, [order, steps]);
 
   const shown = ordered.slice(0, FREE_STEPS);
   const hidden = Math.max(0, ordered.length - FREE_STEPS);
@@ -90,32 +89,32 @@ export default function OnboardFlowWidget() {
     return { type: tp, n: list.length, done: d, pct: list.length ? Math.round((d / list.length) * 100) : null, minutes: list.reduce((a, s) => a + s.minutes, 0) };
   }).filter((x) => x.n > 0);
 
-  const embed = useMemo(() => {
-    const cfg = {
-      widget: 'onboardflow',
-      version: 2,
-      theme: 'light',
-      progress: 'bar',
-      storage: 'local',
-      totals: { steps: shown.length, estimatedMinutes: totalMinutes, openMinutes: remainingMinutes },
-      steps: shown.map((s, i) => ({
-        order: i + 1,
-        id: s.id,
-        label: s.title,
-        type: s.type,
-        guide: s.guide || null,
-        estimatedMinutes: s.minutes,
-        status: done[s.id] ? 'done' : 'open',
-      })),
-    };
-    const snippet = [
-      '<!-- OnboardFlow free preview snippet -->',
-      `<script type="application/json" id="onboardflow-config">${JSON.stringify(cfg, null, 0)}</script>`,
-      '<script src="https://cdn.abetworks.in/onboardflow/v1/embed.js" defer></script>',
-      '<div data-onboardflow="checklist" data-storage="local"></div>',
-    ].join('\n');
-    return { cfg, snippet };
-  }, [shown, done, totalMinutes, remainingMinutes]);
+  // Cheap enough to compute per render, and React Compiler memoizes it on its
+  // own terms — unlike a hand-rolled useMemo whose deps it cannot verify.
+  const cfg = {
+    widget: 'onboardflow',
+    version: 2,
+    theme: 'light',
+    progress: 'bar',
+    storage: 'local',
+    totals: { steps: shown.length, estimatedMinutes: totalMinutes, openMinutes: remainingMinutes },
+    steps: shown.map((s, i) => ({
+      order: i + 1,
+      id: s.id,
+      label: s.title,
+      type: s.type,
+      guide: s.guide || null,
+      estimatedMinutes: s.minutes,
+      status: done[s.id] ? 'done' : 'open',
+    })),
+  };
+  const snippet = [
+    '<!-- OnboardFlow free preview snippet -->',
+    `<script type="application/json" id="onboardflow-config">${JSON.stringify(cfg, null, 0)}</script>`,
+    '<script src="https://cdn.abetworks.in/onboardflow/v1/embed.js" defer></script>',
+    '<div data-onboardflow="checklist" data-storage="local"></div>',
+  ].join('\n');
+  const embed = { cfg, snippet };
 
   function toggle(id) {
     setDone((d) => ({ ...d, [id]: !d[id] }));

@@ -2,7 +2,11 @@ import { NextResponse } from 'next/server';
 import { promises as fs } from 'fs';
 import path from 'path';
 
-const FILE = path.join(process.cwd(), 'data', 'leads.json');
+// `DATA_DIR` points at the mounted disk on a host that has one (the Render
+// blueprint sets /data); without it, leads land next to the app, which is fine
+// locally and ephemeral on a host — the variable is what makes the disk count.
+const DATA_DIR = process.env.DATA_DIR || path.join(process.cwd(), 'data');
+const FILE = path.join(DATA_DIR, 'leads.json');
 
 export async function POST(req) {
   let body;

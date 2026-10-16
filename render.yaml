@@ -10,6 +10,10 @@ services:
     envVars:
       - key: NODE_VERSION
         value: "22"
+      # Where lead captures land — must match the disk path below, or the
+      # disk is paid for and unused.
+      - key: DATA_DIR
+        value: /data
     # Leads are written to /data; the disk keeps them across restarts/deploys.
     disks:
       - name: hub-data
