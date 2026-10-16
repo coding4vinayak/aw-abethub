@@ -51,3 +51,10 @@ test('the index does not advertise a price as current', () => {
   assert.ok(!/then from \$9\/mo/.test(page), 'the premium pill must not read as a current price');
   assert.match(page, /build-out/, 'the index names the paid tiers as in build-out');
 });
+
+test('the capture box promises a follow-up, not an automated email', () => {
+  const capture = read('components/EmailCapture.jsx');
+  assert.ok(!/on its way/.test(capture), 'no report is automatically on its way — the lead route stores, nothing mails');
+  assert.match(capture, /follow up by email/, 'the success message names the follow-up it can keep');
+  assert.match(capture, /first word when the full version ships/, 'the waitlist promise is the one the hub can keep');
+});

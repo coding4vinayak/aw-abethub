@@ -90,10 +90,10 @@ export default function ToolShell({ tool, children, howItWorks = [], capture }) 
             tool={tool.slug}
             headline={
               tool.tier === 'free'
-                ? 'Want the full report?'
-                : 'Get the full version emailed to you'
+                ? 'Want this report, plus one fix tip?'
+                : 'Get early access when it ships'
             }
-            sub="We'll send your complete result plus one tip to fix the biggest gap. No newsletter, no spam."
+            sub="We’ll follow up with your complete result plus one tip to fix the biggest gap. No newsletter, no spam."
           />
         )}
       </div>

@@ -22,7 +22,7 @@ export default function EmailCapture({ tool, headline, sub }) {
   }
 
   if (state === 'done') {
-    return <div className="result"><h3 className="pass">Sent ✓</h3><p>Check your inbox — the full report is on its way.</p></div>;
+    return <div className="result"><h3 className="pass">Saved ✓</h3><p>You’re on the list. We’ll follow up by email — your result, one tip, and first word when the full version ships.</p></div>;
   }
 
   return (
