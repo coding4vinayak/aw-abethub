@@ -1,7 +1,5 @@
 import { NextResponse } from 'next/server';
-import { safeFetch } from '../../../lib/fetchpage';
-import { promises as dns } from 'node:dns';
-import net from 'node:net';
+import { publicFetch, safeFetch } from '../../../lib/fetchpage';
 
 export const runtime = 'nodejs';
 
@@ -9,30 +7,17 @@ const MAX_ENDPOINTS = 12;
 const SAMPLES = 3;
 const SAMPLE_TIMEOUT_MS = 5000;
 
-// Same SSRF guards as safeFetch (private-IP blocked), plus a caller-supplied
-// Authorization header — needed for authenticated health endpoints, the
-// Checkly/Postman "check with headers" pattern. safeFetch itself is shared and
-// header-less, so authenticated probes use this local twin.
-const PRIVATE = (ip) =>
-  ip.startsWith('10.') || ip.startsWith('127.') || ip.startsWith('169.254.') ||
-  ip.startsWith('192.168.') || ip.startsWith('172.16.') || ip === '::1' ||
-  ip.startsWith('fe80') || ip.startsWith('fc') || ip.startsWith('fd') ||
-  (net.isIPv4(ip) && ip.split('.').map(Number)[0] === 0);
-
+// Authenticated probes (the Checkly/Postman "check with headers" pattern) go
+// through the same guarded path as every other caller-supplied URL — one
+// implementation of the address rule and the per-hop redirect check, which
+// this file used to carry a second, drifted copy of.
 async function guardedFetchWithAuth(rawUrl, auth) {
-  const url = new URL(String(rawUrl).trim());
-  if (!/^https?:$/.test(url.protocol)) throw new Error('http(s) only');
-  if (!net.isIP(url.hostname)) {
-    const recs = await dns.lookup(url.hostname, { all: true });
-    if (recs.some((r) => PRIVATE(r.address))) throw new Error('private address blocked');
-  } else if (PRIVATE(url.hostname)) throw new Error('private address blocked');
-  const res = await fetch(url, {
-    redirect: 'follow',
-    signal: AbortSignal.timeout(SAMPLE_TIMEOUT_MS),
-    headers: { 'user-agent': 'AbetworksHub/1.0 (+https://hub.abetworks.in)', authorization: auth },
+  const { status, finalUrl, response } = await publicFetch(rawUrl, {
+    timeoutMs: SAMPLE_TIMEOUT_MS,
+    headers: { authorization: auth },
   });
-  await res.text().catch(() => ''); // drain body, we only meter status + latency
-  return { status: res.status, finalUrl: res.url || url.href };
+  await response.text().catch(() => ''); // drain body, we only meter status + latency
+  return { status, finalUrl };
 }
 
 function cleanAuth(raw) {

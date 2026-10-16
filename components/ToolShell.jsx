@@ -1,4 +1,5 @@
 import EmailCapture from './EmailCapture';
+import Link from 'next/link';
 
 export default function ToolShell({ tool, children, howItWorks = [], capture }) {
   const paid = tool.tier !== 'free';
@@ -65,7 +66,7 @@ export default function ToolShell({ tool, children, howItWorks = [], capture }) 
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqLd) }} />
       <div className="tool-hero">
-        <a className="back" href="/">← All hub tools</a>
+        <Link className="back" href="/">← All hub tools</Link>
         <p className="eyebrow">Abetworks · single-feature tool</p>
         <h1 className="tool-title">
           {tool.name}{' '}

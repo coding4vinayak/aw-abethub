@@ -10,8 +10,10 @@ One deployable Next.js app; every tool route is independent.
 
 ```bash
 npm install
+npm run lint         # eslint-config-next, zero warnings
 npm run build
 npm run start        # http://127.0.0.1:3900  (honors $PORT)
+npm test             # unit + source guards + a live smoke test (needs the build)
 ```
 
 ## Deploy to Render
@@ -20,8 +22,9 @@ npm run start        # http://127.0.0.1:3900  (honors $PORT)
 2. Render → New → Blueprint → pick the repo (reads `render.yaml`).
 3. Add domain `hub.abetworks.in` in Render → Settings → Domains, point DNS there.
 
-Leads (email capture) append to `data/leads.json` on the attached disk.
-View them: `Render → Shell → cat data/leads.json`.
+Leads (email capture) append to `DATA_DIR/leads.json` — the blueprint sets
+`DATA_DIR=/data` so the attached disk is what holds them.
+View them: `Render → Shell → cat /data/leads.json`.
 
 ## Optional AI quality upgrade
 
@@ -38,6 +41,7 @@ No key? Everything still works — previews use rule-based results.
 | `components/ToolShell.jsx` | Shared page frame: hero, email capture, how-it-works, upsell |
 | `app/<slug>/page.jsx` | One route per tool (35 total) |
 | `components/tools/*Widget.jsx` | Client logic per tool |
+| `tests/*.test.mjs` | Registry/page integrity, SSRF known answers, route guards, live smoke |
 | `app/api/<slug>/route.js` | Server engines (DNS, fetch, TLS) — SSRF-guarded via `lib/fetchpage.js` |
 | `app/api/lead/route.js` | Email capture → `data/leads.json` |
 

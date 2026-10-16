@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import './globals.css';
 
 const HUB = process.env.HUB_URL || 'https://hub.abetworks.in';
@@ -29,13 +30,13 @@ export default function RootLayout({ children }) {
         <div className="top-accent" aria-hidden="true" />
         <header className="site-header">
           <div className="wrap header-row">
-            <a className="logo" href="/">
+            <Link className="logo" href="/">
               <span className="logo-mark">A</span>
               Abetworks <em>Hub</em>
-            </a>
+            </Link>
             <nav className="header-nav">
-              <a href="/#free">Free tools</a>
-              <a href="/#paid">Premium tools</a>
+              <Link href="/#free">Free tools</Link>
+              <Link href="/#paid">Premium tools</Link>
               <a className="header-cta" href="https://abetworks-website.onrender.com/" target="_blank" rel="noopener">
                 Full suite →
               </a>

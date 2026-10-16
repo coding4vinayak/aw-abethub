@@ -1,3 +1,5 @@
+import Link from 'next/link';
+
 export default function NotFound() {
   return (
     <div className="card" style={{ textAlign: 'center', padding: '48px 24px' }}>
@@ -7,7 +9,7 @@ export default function NotFound() {
         Every Abetworks single-feature tool is listed on the hub — thirty-five of them, five free forever.
       </p>
       <p style={{ marginTop: 18 }}>
-        <a className="btn" href="/">← Back to all tools</a>
+        <Link className="btn" href="/">← Back to all tools</Link>
       </p>
     </div>
   );

@@ -10,7 +10,8 @@ jobs:
       - uses: actions/setup-node@v7
         with: { node-version: "22", cache: "npm" }
       - run: npm ci
-      - run: npx prisma generate
-        working-directory: .
-        if: ${{ hashFiles('prisma/schema.prisma') != '' }}
+      - run: npm run lint
       - run: npm run build
+      # The smoke test starts the built server and drives it over HTTP:
+      # pages, the 404 route, the SSRF guard, and a real lead capture.
+      - run: npm test

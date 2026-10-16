@@ -49,11 +49,16 @@ export default function FeatureVoteWidget() {
   const [ready, setReady] = useState(false);
 
   useEffect(() => {
+    // localStorage is only readable after mount; initializing state from it
+    // would desync the server-rendered markup, so this documented client-only
+    // read is the one place the set-state-in-effect rule is off.
+    /* eslint-disable react-hooks/set-state-in-effect */
     try {
       const raw = localStorage.getItem(LS_KEY);
       if (raw) setIdeas(normalize(JSON.parse(raw)));
     } catch { /* ignore corrupt state */ }
     setReady(true);
+    /* eslint-enable react-hooks/set-state-in-effect */
   }, []);
 
   useEffect(() => {
