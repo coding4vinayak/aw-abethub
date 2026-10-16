@@ -123,7 +123,7 @@ export default function InvoiceParseWidget() {
 
           <p className="cap-note">
             Free preview validates one pasted invoice, {res.capped ? 'truncated at 20,000 chars, ' : ''}with the real GSTIN check-code algorithm.
-            InvoiceParse paid takes bulk PDF uploads, extracts line items per row, flags duplicate invoice numbers across vendors, and exports
+            The planned InvoiceParse takes bulk PDF uploads, extracts line items per row, flags duplicate invoice numbers across vendors, and exports
             straight to Tally/QuickBooks/Zoho Books.
           </p>
         </div>

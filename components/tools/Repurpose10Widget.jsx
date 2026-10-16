@@ -290,8 +290,8 @@ export default function Repurpose10Widget() {
           </p>
 
           <p className="cap-note">
-            The preview shows {shown.length} of {res.outputs.length} platform formats per run. Repurpose10 paid unlocks all
-            ten, plus BrandVoice tone matching so the output reads like you, not like a template — from $9/mo.
+            The preview shows {shown.length} of {res.outputs.length} platform formats per run. The planned Repurpose10 unlocks all
+            ten, plus BrandVoice tone matching so the output reads like you, not like a template — planned from $9/mo.
           </p>
         </div>
       )}

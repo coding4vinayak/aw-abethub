@@ -167,7 +167,7 @@ export default function TaglinelyWidget() {
               {ai.map((t, i) => Row({ score: t.score || 7, ...t }, i, true))}
             </>
           )}
-          <p className="cap-note">Every formula, every line, unlimited runs — yours to keep. SloganForge adds 100+ candidates, domain checks and brand-voice refinement.</p>
+          <p className="cap-note">Every formula, every line, unlimited runs — yours to keep. The planned SloganForge adds 100+ candidates, domain checks and brand-voice refinement.</p>
         </div>
       )}
     </>

@@ -90,7 +90,7 @@ export default function PingDeckWidget() {
           </table>
           {hidden > 0 && <p style={{ color: 'var(--ink-3)', fontSize: 13 }}>{hidden} more target{hidden > 1 ? 's' : ''} probed but hidden in the preview.</p>}
           <p className="cap-note">
-            Preview surfaces the 2 worst of {res.checked} targets, once, right now. PingDeck paid probes continuously, keeps uptime history,
+            Preview surfaces the 2 worst of {res.checked} targets, once, right now. The planned PingDeck probes continuously, keeps uptime history,
             and adds SSL + domain-renewal expiry alerts by email/WhatsApp before anything goes red.
           </p>
         </div>

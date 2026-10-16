@@ -125,7 +125,7 @@ export default function PricePulseWidget() {
           )}
 
           <p className="cap-note">
-            Free preview compares {Math.min(3, pairs.length)} aligned rows, once, manually pasted. PricePulse paid watches the competitor page
+            Free preview compares {Math.min(3, pairs.length)} aligned rows, once, manually pasted. The planned PricePulse watches the competitor page
             continuously and sends you the old-vs-new diff the moment they change a price.
           </p>
         </div>

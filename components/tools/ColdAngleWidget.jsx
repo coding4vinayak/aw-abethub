@@ -114,8 +114,8 @@ export default function ColdAngleWidget() {
 
           <p className="cap-note">
             Preview caps the batch at {shown.length} of {res.researched} researched prospects per run — one angle each, no subject
-            lines. ColdAngle paid writes 10 distinct angles per prospect plus subject lines and the follow-up sequence, on a
-            schedule for your whole list — from $15/mo.
+            lines. The planned ColdAngle writes 10 distinct angles per prospect plus subject lines and the follow-up sequence, on a
+            schedule for your whole list — planned from $15/mo.
           </p>
         </div>
       )}

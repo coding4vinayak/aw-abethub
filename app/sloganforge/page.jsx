@@ -21,7 +21,7 @@ export default function Page() {
       'On the server we parse your positioning sentence, extract real content words, then multiply them through 15 slogan families tuned to your chosen tone (playful, premium, technical, urgent) plus synonym variants.',
       'Every candidate is scored on prime word count, alliteration, brand recall and tone fit — then screened by three copy-desk tests: cliché words (empower/seamless/unleash get cut, not praised), a syllable meter for chantability, and a say-it-out-loud tongue-twister score. Near-identical lines are deduplicated before ranking.',
       'You also get deterministic name/domain availability hints and an optional AI refinement round over your top 3 — sharpened to your tone, cliché-free.',
-      'The free preview surfaces the best 8 of 100+ generated lines — SloganForge paid adds domain availability checks and refinement rounds.',
+      'The free preview surfaces the best 8 of 100+ generated lines — the planned SloganForge adds domain availability checks and refinement rounds.',
     ]}>
       <SloganForgeWidget />
     </ToolShell>

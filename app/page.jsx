@@ -20,10 +20,10 @@ const SUITE = [
 ];
 
 const FAQS = [
-  { q: 'Who is behind these tools?', a: 'Abetworks — the same team behind NuCRM, LeadGenius, AbetAgent and AbetFlow. Each tool here does one job properly, free or from $9/mo, no onboarding call required.' },
-  { q: 'Are the free tools really free?', a: 'The five marked FREE run the same engines as the paid products and stay free forever, with no signup. They exist to earn your trust — the paid tools exist to keep working once you need depth, history and automation.' },
+  { q: 'Who is behind these tools?', a: 'Abetworks — the same team behind NuCRM, LeadGenius, AbetAgent and AbetFlow. Each tool here does one job properly: five are free forever, the rest are working previews of paid tiers still in build-out (planned from $9/mo).' },
+  { q: 'Are the free tools really free?', a: 'The five marked FREE run the same engines the full products use and stay free forever, with no signup. They exist to earn your trust — the paid tools are previews of full versions in build-out, and the prices shown are the planned catalogue, not a charge today.' },
   { q: 'What happens to the data I paste?', a: 'It is used to compute your result and nothing else. CSVs like Churn Peek are scored in your browser and never leave it. Only if you type an email into the optional box do we keep a record, and that is just so we can send your report.' },
-  { q: 'Can I use the tools without buying the suite?', a: 'Yes — every tool stands alone at its own subdomain too (e.g. siteread.abetworks.in). Buy one tool, use one tool. The suite is there when you outgrow single checks.' },
+  { q: 'Can I use the tools without buying the suite?', a: 'Yes — every tool stands alone at its own subdomain (e.g. siteread.abetworks.in) with no suite account required. When the paid tiers open, buying one tool will work exactly that way, and the free five stay free.' },
 ];
 
 export default function Home() {
@@ -49,8 +49,8 @@ export default function Home() {
         <h1>35 tools that do one thing perfectly</h1>
         <p>
           Single-feature checks for founders, sales and ops teams. Five are free forever —
-          the rest give you a live, real-data preview before you pay a rupee. No signup,
-          no demos, no fake sample dashboards.
+          the rest are live, real-data previews of paid tools still in build-out. Nothing
+          is for sale yet. No signup, no demos, no fake sample dashboards.
         </p>
         <div className="hero-btns">
           <a className="btn" href="#free">Start with the 5 free tools ↓</a>
@@ -59,7 +59,7 @@ export default function Home() {
         <div className="trust-strip" style={{ justifyContent: 'center', marginTop: 18 }}>
           <span>✓ Real engines, live data</span>
           <span>✓ No signup to try</span>
-          <span>✓ Cancel-anytime pricing</span>
+          <span>✓ Nothing to pay today</span>
           <span>✓ Built by Abetworks</span>
         </div>
       </div>
@@ -70,7 +70,7 @@ export default function Home() {
       <div className="tool-grid">{free.map(card)}</div>
 
       <h2 className="section-label" id="paid">
-        Premium tools <span className="pill pill-paid">try free, then from $9/mo</span>
+        Premium tools <span className="pill pill-paid">try free · paid tiers in build-out</span>
       </h2>
       <div className="tool-grid">{paid.map(card)}</div>
 

@@ -247,7 +247,7 @@ export default function OnboardFlowWidget() {
           {err && <p className="error-note">{err}</p>}
 
           <p className="cap-note">
-            Free preview builds a {FREE_STEPS}-step checklist and the paste-ready embed config. OnboardFlow paid hosts the widget in your product,
+            Free preview builds a {FREE_STEPS}-step checklist and the paste-ready embed config. The planned OnboardFlow hosts the widget in your product,
             tracks completion, time-to-value and drop-off per step, and lets you A/B the order.
           </p>
         </>

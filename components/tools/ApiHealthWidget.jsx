@@ -72,8 +72,8 @@ export default function ApiHealthWidget() {
             </tbody>
           </table>
           <p className="cap-note">
-            Preview shows the 3 worst of {res.checked} endpoints. API Health monitors every vendor endpoint on a
-            schedule with uptime %, error-rate trends and latency alerts before breakage hits your product — from $12/mo.
+            Preview shows the 3 worst of {res.checked} endpoints. The planned API Health monitors every vendor endpoint on a
+            schedule with uptime %, error-rate trends and latency alerts before breakage hits your product — planned from $12/mo.
           </p>
         </div>
       )}

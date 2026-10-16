@@ -133,7 +133,7 @@ export default function SloganForgeWidget() {
             </div>
           )}
 
-          <p className="cap-note">Free preview: your best 8 of {results.total}+ scored slogans. Paid SloganForge checks domain availability on every line and runs refinement rounds in your brand voice.</p>
+          <p className="cap-note">Free preview: your best 8 of {results.total}+ scored slogans. The planned SloganForge checks domain availability on every line and runs refinement rounds in your brand voice.</p>
         </div>
       )}
     </>

@@ -404,8 +404,8 @@ export default function QuoteCraftWidget() {
 
           <p className="cap-note">
             Free preview builds one quote document with {shown.length} of {res.items.length} line items and no tracking.
-            QuoteCraft paid adds a unique accept-URL with open/view tracking, your branding and letterhead, unlimited quotes
-            and revision history — from $12/mo.
+            The planned QuoteCraft adds a unique accept-URL with open/view tracking, your branding and letterhead, unlimited quotes
+            and revision history — planned from $12/mo.
           </p>
         </div>
       )}

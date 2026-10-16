@@ -130,7 +130,7 @@ export default function FeatureVoteWidget() {
         </div>
       </form>
 
-      {atCap && <p className="error-note" style={{ background: 'var(--accent-soft)', color: 'var(--accent)' }}>Free board limit reached ({FREE_CAP} ideas). FeatureVote paid removes the cap and adds a public embed page plus customer accounts.</p>}
+      {atCap && <p className="error-note" style={{ background: 'var(--accent-soft)', color: 'var(--accent)' }}>Free board limit reached ({FREE_CAP} ideas). The planned FeatureVote removes the cap and adds a public embed page plus customer accounts.</p>}
 
       {ideas.length > 0 ? (
         <div className="result">
@@ -170,7 +170,7 @@ export default function FeatureVoteWidget() {
               </div>
             ))}
           </div>
-          <p className="cap-note">This board saves to your browser only. Paid adds a public embeddable board, one-vote-per-customer accounts, and admin-weighted signals so quiet-but-valuable requests surface.</p>
+          <p className="cap-note">This board saves to your browser only. The planned paid tier adds a public embeddable board, one-vote-per-customer accounts, and admin-weighted signals so quiet-but-valuable requests surface.</p>
         </div>
       ) : (
         <p style={{ color: 'var(--ink-3)', marginTop: 14 }}>No ideas yet — add your first one above. Votes, “would pay” weights and pipeline columns persist in this browser.</p>

@@ -120,8 +120,8 @@ export default function CancelSaveWidget() {
           </div>
 
           <p className="cap-note">
-            This decision matrix runs one cancellation at a time. CancelSave paid embeds the full flow in your product,
-            picks the offer per customer automatically, and A/B tracks which save-play actually moves your save rate — from $19/mo.
+            This decision matrix runs one cancellation at a time. The planned CancelSave embeds the full flow in your product,
+            picks the offer per customer automatically, and A/B tracks which save-play actually moves your save rate — planned from $19/mo.
           </p>
         </div>
       )}

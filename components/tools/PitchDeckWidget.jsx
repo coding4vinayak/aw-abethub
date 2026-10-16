@@ -79,7 +79,7 @@ export default function PitchDeckWidget() {
           <ol>{res.questions.map((q, i) => <li key={i} style={{ margin: '6px 0' }}>{q}</li>)}</ol>
 
           <p className="cap-note">
-            Preview reveals the first 5 of 12 slides. PitchDeck paid exports the full deck outline with speaker notes, fills the collect-this metrics
+            Preview reveals the first 5 of 12 slides. The planned PitchDeck exports the full deck outline with speaker notes, fills the collect-this metrics
             from your data, and adds designer-ready layouts.
           </p>
         </div>

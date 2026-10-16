@@ -90,8 +90,8 @@ export default function AnswerReadyWidget() {
           </table>
           <p className="cap-note">
             Preview shows {shown.length} of {res.totalQuestions} generated buyer questions ({res.answerable} answerable).
-            AnswerReady crawls your whole site continuously, scores every page against live AI-engine questions, and
-            tracks the gaps before your buyers find them — from $9/mo.
+            The planned AnswerReady crawls your whole site continuously, scores every page against live AI-engine questions,
+            and tracks the gaps before your buyers find them — planned from $9/mo.
           </p>
         </div>
       )}

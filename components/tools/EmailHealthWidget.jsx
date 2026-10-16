@@ -69,7 +69,7 @@ export default function EmailHealthWidget() {
               ))}
             </tbody>
           </table>
-          <p className="cap-note">This is the full free check — 12 weighted deliverability probes, unlimited, forever. EmailAudit adds blacklist status, bounce analysis and a warmup plan.</p>
+          <p className="cap-note">This is the full free check — 12 weighted deliverability probes, unlimited, forever. The planned EmailAudit adds blacklist status, bounce analysis and a warmup plan.</p>
         </div>
       )}
     </>

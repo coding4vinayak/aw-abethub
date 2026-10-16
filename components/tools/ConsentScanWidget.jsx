@@ -79,15 +79,15 @@ export default function ConsentScanWidget() {
               </table>
               {res.trackers.length > shownTrackers.length && (
                 <p style={{ margin: '6px 0 0', fontSize: 12, color: 'var(--ink-3)' }}>
-                  {res.trackers.length - shownTrackers.length} more tracker vendor(s) mapped ({res.trackers.slice(3).map((t) => t.vendor).join(', ')}) — full inventory in the paid crawl.
+                  {res.trackers.length - shownTrackers.length} more tracker vendor(s) mapped ({res.trackers.slice(3).map((t) => t.vendor).join(', ')}) — full inventory in the planned crawl.
                 </p>
               )}
             </>
           )}
           <p className="cap-note">
             Preview shows the 3 worst of {res.totalChecks} checks run (plus {res.trackerHosts.length} tracker domains mapped).
-            ConsentScan paid crawls every page against the full 20-point DPDP/GDPR checklist with article-by-article
-            citations and re-scans on change — from $19/mo.
+            The planned ConsentScan crawls every page against the full 20-point DPDP/GDPR checklist with article-by-article
+            citations and re-scans on change — planned from $19/mo.
           </p>
         </div>
       )}

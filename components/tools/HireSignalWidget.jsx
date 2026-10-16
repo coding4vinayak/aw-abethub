@@ -241,7 +241,7 @@ export default function HireSignalWidget() {
               ))}
             </tbody>
           </table>
-          <p className="cap-note">Preview scores the top 3 applicants. HireSignal paid ranks the full pile with ATS-style weighting, and adds bias flags (name/gender/age proxies) so scoring stays on skills.</p>
+          <p className="cap-note">Preview scores the top 3 applicants. The planned HireSignal ranks the full pile with ATS-style weighting, and adds bias flags (name/gender/age proxies) so scoring stays on skills.</p>
         </div>
       )}
     </>

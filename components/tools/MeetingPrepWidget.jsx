@@ -136,7 +136,7 @@ export default function MeetingPrepWidget() {
           </table>
 
           <p className="cap-note">
-            This is your one free brief{res.capped ? ' (notes truncated at 12,000 chars)' : ''}. MeetingPrep paid connects your calendar and generates this
+            This is your one free brief{res.capped ? ' (notes truncated at 12,000 chars)' : ''}. The planned MeetingPrep connects your calendar and generates this
             page automatically for every call — company snapshot, name gaps, questions and risks in your inbox 10 minutes before start.
           </p>
         </div>

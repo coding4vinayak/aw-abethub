@@ -21,7 +21,7 @@ export default function Page() {
       'One deal per line: won or lost, then the amount, then your notes — straight from your CRM export or call log. Dates or quarter labels inside notes (Q3, Sep 2026, 2026-09-12) are detected automatically.',
       'Every note gets a confidence score (length, numbers, causal wording, verbatim quotes), then lost deals are classified into six keyword families and ranked by confidence-weighted revenue — vague one-word notes can’t outrank real evidence.',
       'Each theme surfaces its voice-of-customer best quote (the most specific sentence, not the longest), a three-step fix playbook, win-side “what’s working” themes and a quarter pattern — with an AI narrative over the computed numbers when configured.',
-      'You get a ranked loss table plus a one-paragraph diagnosis of your biggest leak with the fix. The paid plan adds full quarterly reports and direct CRM field ingest.',
+      'You get a ranked loss table plus a one-paragraph diagnosis of your biggest leak with the fix. The planned full version adds full quarterly reports and direct CRM field ingest.',
     ]}>
       <WinLossWidget />
     </ToolShell>

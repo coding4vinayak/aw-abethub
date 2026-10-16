@@ -21,7 +21,7 @@ export default function Page() {
       'Paste tickets as Agent: / Customer: lines, separated by blank lines or dashes. “First response: 4 hours” and “SLA: 4h / sla|breached” lines feed the SLA scorecard column.',
       'Each ticket becomes a QA scorecard: overall grade A–F plus weighted sub-scores (resolution, tone & empathy, policy compliance, customer effort, SLA, opportunities) each with a pass/fail threshold you can see on the bar.',
       'The customer-effort proxy measures who carries the conversation (text ratio, turn count, repeat-question markers), and missed-opportunity detection flags feature or pricing asks the agent ignored.',
-      'The free preview grades your first 3 tickets; paid SupportQA scores 100% of volume and tracks trends per agent and week.',
+      'The free preview grades your first 3 tickets; the planned SupportQA scores 100% of volume and tracks trends per agent and week.',
     ]}>
       <SupportQAWidget />
     </ToolShell>

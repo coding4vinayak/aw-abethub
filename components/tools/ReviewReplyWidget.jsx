@@ -320,9 +320,9 @@ export default function ReviewReplyWidget() {
           })}
 
           <p className="cap-note">
-            One reply per review in the preview, drafted by hand from your inputs. ReviewReply paid reads your whole inbox —
+            One reply per review in the preview, drafted by hand from your inputs. The planned ReviewReply reads your whole inbox —
             Google, G2 and store reviews together — drafts every reply, and posts them back on your accounts with a per-location
-            approval queue — from $9/mo.
+            approval queue — planned from $9/mo.
           </p>
         </div>
       )}
