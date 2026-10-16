@@ -2,11 +2,15 @@ services:
   - type: web
     name: abetworks-hub
     runtime: node
-    plan: free
+    plan: starter        # free = sleeps after ~15 min AND cannot attach a disk;
+                         # the disk below is where captured leads live, so free
+                         # would lose leads on every deploy. ~$7/mo.
     region: singapore
     buildCommand: npm ci && npm run build
     startCommand: npm run start
     healthCheckPath: /
+    domains:
+      - hub.abetworks.in
     envVars:
       - key: NODE_VERSION
         value: "22"
@@ -14,8 +18,16 @@ services:
       # disk is paid for and unused.
       - key: DATA_DIR
         value: /data
+      # Optional AI quality upgrade for the compose-style tools — leave blank
+      # to keep the deterministic engines (README §"Optional AI quality upgrade").
+      - key: ABET_API_KEY
+        sync: false
+      - key: ABET_API_BASE
+        sync: false
     # Leads are written to /data; the disk keeps them across restarts/deploys.
-    disks:
-      - name: hub-data
-        path: /data
-        sizeGB: 1
+    # Field shape per Render's current spec: singular `disk` + `mountPath`
+    # (the previous `disks:` list + `path:` was not importable).
+    disk:
+      name: hub-data
+      mountPath: /data
+      sizeGB: 1
