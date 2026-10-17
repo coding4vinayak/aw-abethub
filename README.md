@@ -24,7 +24,13 @@ npm test             # unit + source guards + a live smoke test (needs the build
 
 Leads (email capture) append to `DATA_DIR/leads.json` — the blueprint sets
 `DATA_DIR=/data` so the attached disk is what holds them.
-View them: `Render → Shell → cat /data/leads.json`.
+
+Read them without a shell: `GET /api/leads` answers JSON, `?format=csv` the
+ESP-ready export (Bearer header or `?token=`). Set `LEADS_TOKEN` to enable it —
+until then the route is an honest 503. Get pinged instead: set
+`LEAD_NOTIFY_URL` and every captured lead is POSTed there as JSON
+(`{ email, tool, at }`), after the visitor's response, never in its way.
+Both vars are `sync: false` in `render.yaml` — the dashboard prompts for them.
 
 ## Optional AI quality upgrade
 
@@ -43,7 +49,9 @@ No key? Everything still works — previews use rule-based results.
 | `components/tools/*Widget.jsx` | Client logic per tool |
 | `tests/*.test.mjs` | Registry/page integrity, SSRF known answers, route guards, live smoke |
 | `app/api/<slug>/route.js` | Server engines (DNS, fetch, TLS) — SSRF-guarded via `lib/fetchpage.js` |
-| `app/api/lead/route.js` | Email capture → `data/leads.json` |
+| `lib/leads.js` | Lead store: JSONL append/read, CSV export, token check, notify webhook |
+| `app/api/lead/route.js` | Email capture → `data/leads.json` (+ after-response notify) |
+| `app/api/leads/route.js` | Owner-only read/export of captured leads (LEADS_TOKEN-gated) |
 
 ## Adding a tool
 
