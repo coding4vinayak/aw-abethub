@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import './globals.css';
+import { SUITE_URL } from '../lib/site';
 
 const HUB = process.env.HUB_URL || 'https://hub.abetworks.in';
 
@@ -37,7 +38,7 @@ export default function RootLayout({ children }) {
             <nav className="header-nav">
               <Link href="/#free">Free tools</Link>
               <Link href="/#paid">Premium tools</Link>
-              <a className="header-cta" href="https://abetworks-website.onrender.com/" target="_blank" rel="noopener">
+              <a className="header-cta" href={`${SUITE_URL}/`} target="_blank" rel="noopener">
                 Full suite →
               </a>
             </nav>
@@ -53,7 +54,7 @@ export default function RootLayout({ children }) {
             <div className="footer-row">
               <span>© 2026 Abetworks. Built for teams that sell, serve and scale.</span>
               <span className="footer-links">
-                <a href="https://abetworks.in/">abetworks.in</a>
+                <a href={`${SUITE_URL}/`}>abetworks.in</a>
                 <a href="/privacy">Privacy</a>
                 <a href="/terms">Terms</a>
               </span>
