@@ -1,17 +1,21 @@
 // The one test that proves the product: a built server answering real HTTP.
 // It starts `next start` on a scratch port, drives the pages a buyer lands
 // on, and stores a lead through the real capture route into a scratch
-// DATA_DIR — then checks the disk actually holds it. Without a build it
-// skips honestly rather than passing vacuously.
+// DATA_DIR — then checks the disk actually holds it, that the owner can
+// read/export it with a token, and that the notify webhook fires after the
+// response. Without a build it skips honestly rather than passing vacuously.
 import { test, before, after } from 'node:test';
 import assert from 'node:assert/strict';
 import { spawn } from 'node:child_process';
 import { existsSync, mkdtempSync, readFileSync, rmSync } from 'node:fs';
+import http from 'node:http';
 import { tmpdir } from 'node:os';
 import path from 'node:path';
 import { TOOLS } from '../lib/registry.js';
 
 const PORT = 3987;
+const NOTIFY_PORT = 3988;
+const OWNER_TOKEN = 'smoke-owner-token';
 const BASE = `http://127.0.0.1:${PORT}`;
 const READY_DEADLINE_MS = 30_000;
 
@@ -20,11 +24,26 @@ if (!existsSync('.next/BUILD_ID')) {
 } else {
   let child;
   let dataDir;
+  let notifySrv;
+  const notifyHits = [];
 
   before(async () => {
     dataDir = mkdtempSync(path.join(tmpdir(), 'abethub-leads-'));
+    // A live receiver for the notify webhook — the point is to prove the POST
+    // leaves the app, not that the app can build the object.
+    notifySrv = http.createServer((req, res) => {
+      let body = '';
+      req.on('data', (c) => { body += c; });
+      req.on('end', () => { notifyHits.push(body); res.end('ok'); });
+    });
+    await new Promise((r) => notifySrv.listen(NOTIFY_PORT, '127.0.0.1', r));
     child = spawn(process.execPath, ['node_modules/next/dist/bin/next', 'start', '-p', String(PORT)], {
-      env: { ...process.env, DATA_DIR: dataDir },
+      env: {
+        ...process.env,
+        DATA_DIR: dataDir,
+        LEADS_TOKEN: OWNER_TOKEN,
+        LEAD_NOTIFY_URL: `http://127.0.0.1:${NOTIFY_PORT}/hook`,
+      },
       stdio: 'ignore',
     });
     const deadline = Date.now() + READY_DEADLINE_MS;
@@ -40,6 +59,7 @@ if (!existsSync('.next/BUILD_ID')) {
 
   after(() => {
     child?.kill('SIGTERM');
+    notifySrv?.close();
     if (dataDir) rmSync(dataDir, { recursive: true, force: true });
   });
 
@@ -89,5 +109,50 @@ if (!existsSync('.next/BUILD_ID')) {
     assert.equal(ok.status, 200);
     const stored = readFileSync(path.join(dataDir, 'leads.json'), 'utf8');
     assert.ok(stored.includes(email), 'the lead the API confirmed is not on disk');
+  });
+
+  test('the owner can read and export leads — and the notify webhook fires', async () => {
+    const email = `owner+${Date.now()}@example.com`;
+    const res = await fetch(`${BASE}/api/lead`, {
+      method: 'POST',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({ email, tool: 'siteread' }),
+    });
+    assert.equal(res.status, 200);
+
+    // The notify runs *after* the response, and the previous test's notify may
+    // still be in flight — so wait for THIS lead specifically, then insist.
+    const deadline = Date.now() + 5000;
+    let delivered = [];
+    for (;;) {
+      delivered = notifyHits.map((raw) => JSON.parse(raw));
+      if (delivered.some((h) => h.email === email && h.tool === 'siteread')) break;
+      if (Date.now() > deadline) break;
+      await new Promise((r) => setTimeout(r, 50));
+    }
+    assert.ok(
+      delivered.some((h) => h.email === email && h.tool === 'siteread'),
+      'the notify webhook did not deliver the lead',
+    );
+
+    // No token, or a wrong one, is a 401 — never data.
+    assert.equal((await fetch(`${BASE}/api/leads`)).status, 401);
+    assert.equal((await fetch(`${BASE}/api/leads?token=nope`)).status, 401);
+
+    // With the token: JSON first…
+    const json = await fetch(`${BASE}/api/leads`, { headers: { authorization: `Bearer ${OWNER_TOKEN}` } });
+    assert.equal(json.status, 200);
+    const body = await json.json();
+    assert.ok(body.leads.some((l) => l.email === email), 'the captured lead is not readable');
+
+    // …then the ESP export.
+    const csv = await fetch(`${BASE}/api/leads?format=csv`, {
+      headers: { authorization: `Bearer ${OWNER_TOKEN}` },
+    });
+    assert.equal(csv.status, 200);
+    assert.match(csv.headers.get('content-type'), /text\/csv/);
+    const text = await csv.text();
+    assert.match(text, /^email,tool,at\n/);
+    assert.ok(text.includes(email), 'the export is missing the captured lead');
   });
 }

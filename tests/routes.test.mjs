@@ -41,6 +41,18 @@ test('the authenticated probe reuses the guard instead of copying it', () => {
 });
 
 test('lead captures honor DATA_DIR so the mounted disk is what holds them', () => {
-  const src = readFileSync('app/api/lead/route.js', 'utf8');
-  assert.match(src, /process\.env\.DATA_DIR/);
+  // The capture route writes through the shared store; the store is where
+  // DATA_DIR must decide the path, or leads land somewhere the disk is not.
+  const route = readFileSync('app/api/lead/route.js', 'utf8');
+  assert.match(route, /from '\.\.\/\.\.\/\.\.\/lib\/leads'/, 'capture must write through lib/leads.js');
+  const lib = readFileSync('lib/leads.js', 'utf8');
+  assert.match(lib, /process\.env\.DATA_DIR/, 'the disk path must come from DATA_DIR');
+});
+
+test('the owner leads route is token-gated and refuses loudly when unset', () => {
+  const src = readFileSync('app/api/leads/route.js', 'utf8');
+  assert.match(src, /process\.env\.LEADS_TOKEN/, 'the token must come from the environment');
+  assert.match(src, /503/, 'unconfigured must say so, never expose the disk');
+  assert.match(src, /401/, 'a wrong token must be rejected');
+  assert.match(src, /timingSafeEqual|tokenOk/, 'the token check must not be a naive compare');
 });

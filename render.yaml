@@ -24,6 +24,16 @@ services:
         sync: false
       - key: ABET_API_BASE
         sync: false
+      # Owner-only view/export of captured leads: GET /api/leads (Bearer token
+      # or ?token=; add ?format=csv for the ESP import). Blank keeps the route
+      # disabled (503). Pick any long random string.
+      - key: LEADS_TOKEN
+        sync: false
+      # Optional: webhook POSTed for every captured lead ({ email, tool, at }),
+      # so a lead is actionable without opening the Render shell. Any HTTPS
+      # endpoint (Slack workflow, Zapier, your own service). Blank = off.
+      - key: LEAD_NOTIFY_URL
+        sync: false
     # Leads are written to /data; the disk keeps them across restarts/deploys.
     # Field shape per Render's current spec: singular `disk` + `mountPath`
     # (the previous `disks:` list + `path:` was not importable).
