@@ -34,6 +34,11 @@ services:
       # endpoint (Slack workflow, Zapier, your own service). Blank = off.
       - key: LEAD_NOTIFY_URL
         sync: false
+      # Canonical public site for the suite links (header CTA, footer, product
+      # upsells). Set this to https://abetworks-website.onrender.com only while
+      # the DNS switch to abetworks.in is mid-flight.
+      - key: SUITE_URL
+        value: https://abetworks.in
     # Leads are written to /data; the disk keeps them across restarts/deploys.
     # Field shape per Render's current spec: singular `disk` + `mountPath`
     # (the previous `disks:` list + `path:` was not importable).
