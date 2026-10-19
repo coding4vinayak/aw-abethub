@@ -8,7 +8,7 @@ services:
     region: singapore
     buildCommand: npm ci && npm run build
     startCommand: npm run start
-    healthCheckPath: /
+    healthCheckPath: /api/health
     domains:
       - hub.abetworks.in
     envVars:
@@ -24,6 +24,18 @@ services:
         sync: false
       - key: ABET_API_BASE
         sync: false
+      # Model the AbetAPI gateway should serve — default: abet-core. Only
+      # meaningful when ABET_API_KEY is set.
+      - key: ABET_MODEL
+        sync: false
+      # Alternative provider, used only when ABET_API_KEY is blank: any
+      # OpenAI-compatible endpoint.
+      - key: OPENAI_API_KEY
+        sync: false
+      - key: OPENAI_BASE_URL
+        sync: false       # default: https://api.openai.com/v1
+      - key: OPENAI_MODEL
+        sync: false       # default: gpt-4o-mini
       # Owner-only view/export of captured leads: GET /api/leads (Bearer token
       # or ?token=; add ?format=csv for the ESP import). Blank keeps the route
       # disabled (503). Pick any long random string.
@@ -33,6 +45,14 @@ services:
       # so a lead is actionable without opening the Render shell. Any HTTPS
       # endpoint (Slack workflow, Zapier, your own service). Blank = off.
       - key: LEAD_NOTIFY_URL
+        sync: false
+      # The hub's own canonical origin, used for links that should stay on the
+      # hub — default: https://hub.abetworks.in.
+      - key: HUB_URL
+        sync: false
+      # The marketing site's origin (metadataBase, canonical tags) — default:
+      # HUB_URL. Point it at https://abetworks.in once the DNS switch lands.
+      - key: SITE_URL
         sync: false
       # Canonical public site for the suite links (header CTA, footer, product
       # upsells). Set this to https://abetworks-website.onrender.com only while
