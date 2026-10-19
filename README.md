@@ -22,6 +22,15 @@ npm test             # unit + source guards + a live smoke test (needs the build
 2. Render → New → Blueprint → pick the repo (reads `render.yaml`).
 3. Add domain `hub.abetworks.in` in Render → Settings → Domains, point DNS there.
 
+Links that should stay on the hub use `HUB_URL` (default
+`https://hub.abetworks.in`); metadata/canonical tags use `SITE_URL` (default:
+`HUB_URL`). Both are `sync: false` in `render.yaml` — a different origin is an
+env change, never a code change.
+
+The Render health check is `/api/health`: it writes and removes a probe file in
+`DATA_DIR`, so a deploy whose disk is full, read-only, or unattached never takes
+traffic (503 while the probe fails).
+
 Leads (email capture) append to `DATA_DIR/leads.json` — the blueprint sets
 `DATA_DIR=/data` so the attached disk is what holds them.
 
@@ -34,10 +43,13 @@ Both vars are `sync: false` in `render.yaml` — the dashboard prompts for them.
 
 ## Optional AI quality upgrade
 
-Set env `ABET_API_KEY` (and `ABET_API_BASE` if not the default AbetAPI URL).
-Tools that compose text (coldopener, coldangle, answerready, emailaudit,
-meetingprep) automatically switch from the deterministic engine to AI output.
-No key? Everything still works — previews use rule-based results.
+Set env `ABET_API_KEY` (and `ABET_API_BASE`/`ABET_MODEL` if not the default
+AbetAPI URL/model). Tools that compose text (coldopener, coldangle, answerready,
+emailaudit, meetingprep) automatically switch from the deterministic engine to
+AI output. Prefer your own provider? Leave `ABET_API_KEY` blank and set
+`OPENAI_API_KEY` (plus optional `OPENAI_BASE_URL`/`OPENAI_MODEL`) to use any
+OpenAI-compatible endpoint instead. No key? Everything still works — previews
+use rule-based results. Every one of these is `sync: false` in `render.yaml`.
 
 ## Structure
 
