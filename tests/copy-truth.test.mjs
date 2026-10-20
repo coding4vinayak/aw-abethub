@@ -52,9 +52,23 @@ test('the index does not advertise a price as current', () => {
   assert.match(page, /build-out/, 'the index names the paid tiers as in build-out');
 });
 
-test('the capture box promises a follow-up, not an automated email', () => {
+test('the capture box says only what it can prove', () => {
   const capture = read('components/EmailCapture.jsx');
-  assert.ok(!/on its way/.test(capture), 'no report is automatically on its way — the lead route stores, nothing mails');
-  assert.match(capture, /follow up by email/, 'the success message names the follow-up it can keep');
-  assert.match(capture, /first word when the full version ships/, 'the waitlist promise is the one the hub can keep');
+  assert.ok(!/on its way/.test(capture), 'no report may claim to be travelling that the hub did not send');
+  // The box may only say "sent" when the API said the message was delivered.
+  assert.match(capture, /setDelivered\(Boolean\(j\.delivered\)\)/, 'the sent claim is gated on the API answer');
+  assert.match(capture, /\{delivered \?/, 'and the card branches on that answer, not on its own optimism');
+  assert.match(capture, /Report sent ✓/, 'a real delivery says so');
+  assert.match(capture, /no mail provider/, 'a deployment without one must say the report was not emailed');
+  assert.match(capture, /follow up by email/, 'and the promise it can still keep is named');
+});
+
+test('the lead route reports the channel that ran, and the copy follows it', () => {
+  const route = read('app/api/lead/route.js');
+  assert.match(route, /delivered\s*=\s*sent\.channel\s*===\s*'http'\s*&&\s*!sent\.error/, 'delivered means a provider took the message');
+  assert.match(route, /sanitizeReport\(body\.report\)/, 'the report is reduced before it is sent');
+  assert.match(route, /renderReportEmail\(/, 'the email is built from the report the visitor produced');
+  const mail = read('lib/mail.js');
+  assert.match(mail, /MAIL_CHANNEL\.HTTP/, 'the transport names the channel that ran');
+  assert.match(mail, /logMessage/, 'and has a log fallback that says it was not delivered');
 });

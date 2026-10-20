@@ -1,5 +1,6 @@
 'use client';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useReport } from '../ReportContext';
 
 const GRADE_COLORS = { A: '#16a34a', B: '#65a30d', C: '#ca8a04', D: '#ea580c', F: '#dc2626' };
 
@@ -22,6 +23,21 @@ export default function EmailHealthWidget() {
   }
 
   const statusClass = (s) => (s === 'pass' ? 'pass' : s === 'warn' ? 'warn' : 'fail');
+
+  // The report the capture card emails: the score, every check, and the
+  // first thing a pro would do about the first thing that failed.
+  const publish = useReport();
+  useEffect(() => {
+    if (!res) { publish(null); return; }
+    const checks = Array.isArray(res.checks) ? res.checks : [];
+    const firstProblem = checks.find((c) => c.status !== 'pass');
+    publish({
+      title: `Email Deliverability Health \u2014 ${res.domain || ''}`.trim(),
+      headline: `${res.score}/100 \u00b7 grade ${res.grade}`,
+      rows: checks.map((c) => ({ label: c.label, value: `${c.status.toUpperCase()} \u2014 ${c.detail}` })),
+      tip: firstProblem ? `${firstProblem.label}: ${firstProblem.guidance}` : 'Every check passed \u2014 nothing to fix.',
+    });
+  }, [res, publish]);
   const statusLabel = (s) => (s === 'pass' ? 'PASS' : s === 'warn' ? 'CHECK' : 'FAIL');
 
   return (

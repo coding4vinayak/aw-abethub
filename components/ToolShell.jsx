@@ -1,4 +1,4 @@
-import EmailCapture from './EmailCapture';
+import ToolCapture from './ToolCapture';
 import Link from 'next/link';
 
 export default function ToolShell({ tool, children, howItWorks = [], capture }) {
@@ -84,17 +84,29 @@ export default function ToolShell({ tool, children, howItWorks = [], capture }) 
       </div>
 
       <div className="card">
-        {children}
-        {capture !== false && (
-          <EmailCapture
+        {capture !== false ? (
+          // The capture card carries the result the visitor just produced, so
+          // the widget and the card have to share a tree: ToolCapture is that
+          // tree, and the card's promise ("one email with your report") is
+          // kept by the hub sending it.
+          <ToolCapture
             tool={tool.slug}
+            toolName={tool.name}
             headline={
               tool.tier === 'free'
                 ? 'Want this report, plus one fix tip?'
                 : 'Get early access when it ships'
             }
-            sub="We’ll follow up with your complete result plus one tip to fix the biggest gap. No newsletter, no spam."
-          />
+            sub={
+              tool.tier === 'free'
+                ? 'We’ll email your result and one tip to fix the biggest gap. No newsletter, no spam.'
+                : 'We’ll email you when the full version ships. No newsletter, no spam.'
+            }
+          >
+            {children}
+          </ToolCapture>
+        ) : (
+          children
         )}
       </div>
 

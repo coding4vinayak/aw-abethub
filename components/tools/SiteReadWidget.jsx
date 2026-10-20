@@ -1,5 +1,6 @@
 'use client';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useReport } from '../ReportContext';
 
 export default function SiteReadWidget() {
   const [url, setUrl] = useState('');
@@ -18,6 +19,21 @@ export default function SiteReadWidget() {
     } catch { setErr('Network error — try again.'); }
     setBusy(false);
   }
+
+  // The report the capture card emails. Published from the result, so the
+  // email carries what the visitor is looking at rather than a promise to
+  // send it later.
+  const publish = useReport();
+  useEffect(() => {
+    if (!res) { publish(null); return; }
+    const blockers = Array.isArray(res.blockers) ? res.blockers : [];
+    publish({
+      title: `AI Visibility Check \u2014 ${res.url || ''}`.trim(),
+      headline: `${res.score}/100 \u00b7 grade ${res.grade}`,
+      rows: blockers.slice(0, 5).map((b) => ({ label: `${b.label} (\u2212${b.lost} pts)`, value: b.fix })),
+      tip: blockers.length ? `Fix the biggest one first: ${blockers[0].label}. ${blockers[0].fix}` : 'Nothing blocking \u2014 AI engines can read this page well.',
+    });
+  }, [res, publish]);
 
   const badge = (s) => (
     <span className={s === 'pass' ? 'pass' : s === 'warn' ? 'warn' : 'fail'}>
