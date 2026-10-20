@@ -41,6 +41,31 @@ until then the route is an honest 503. Get pinged instead: set
 (`{ email, tool, at }`), after the visitor's response, never in its way.
 Both vars are `sync: false` in `render.yaml` — the dashboard prompts for them.
 
+### The promised report is really emailed
+
+The capture card under every free tool says **"one email with your report —
+no newsletter, no spam"**, and the visitor's result is what arrives: the
+score, the rows that failed, and one fix tip, with a link back to the tool.
+
+That promise is kept by the product, not by a person remembering to send it:
+
+- The widget publishes the result it is already showing; the capture card
+  sends it with the address (`components/ReportContext.jsx`).
+- The server reduces it before it is allowed near an email — strings are cut
+  to a length that fits, the row count is capped, and anything that is not a
+  string is dropped rather than stringified (`lib/report-email.js`).
+- The mail transport reports **which transport ran**
+  (`lib/mail.js`): `http` when a provider took the message, `log` when there
+  is no provider and the message went to the server log instead. The card
+  says "Report sent ✓" only for a real delivery, and otherwise says plainly
+  that the report was not emailed.
+
+Set `RESEND_API_KEY` (or `MAIL_WEBHOOK_URL` for any endpoint that takes
+`{from, to, subject, html, text}`) to switch the transport on;
+`MAIL_FROM` sets the sender and `MAIL_WEBHOOK_TOKEN` an optional bearer for
+the webhook. All are `sync: false` in `render.yaml`. With none of them set
+the hub still works — the report is logged, and the visitor is told the truth.
+
 ## Optional AI quality upgrade
 
 Set env `ABET_API_KEY` (and `ABET_API_BASE`/`ABET_MODEL` if not the default
@@ -62,7 +87,9 @@ use rule-based results. Every one of these is `sync: false` in `render.yaml`.
 | `tests/*.test.mjs` | Registry/page integrity, SSRF known answers, route guards, live smoke |
 | `app/api/<slug>/route.js` | Server engines (DNS, fetch, TLS) — SSRF-guarded via `lib/fetchpage.js` |
 | `lib/leads.js` | Lead store: JSONL append/read, CSV export, token check, notify webhook |
-| `app/api/lead/route.js` | Email capture → `data/leads.json` (+ after-response notify) |
+| `app/api/lead/route.js` | Email capture → `data/leads.json` (+ after-response notify) and the promised report email |
+| `lib/mail.js` | Mail transport — reports which channel ran (provider or log) |
+| `lib/report-email.js` | The report email: bounds, sanitising, and the HTML/text render |
 | `app/api/leads/route.js` | Owner-only read/export of captured leads (LEADS_TOKEN-gated) |
 
 ## Adding a tool

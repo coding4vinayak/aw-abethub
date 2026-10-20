@@ -1,5 +1,6 @@
 'use client';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useReport } from '../ReportContext';
 
 const STOP = new Set(['the', 'and', 'for', 'that', 'this', 'with', 'from', 'their', 'there', 'they', 'them', 'then', 'than', 'what', 'when', 'where', 'which', 'while', 'into', 'onto', 'about', 'after', 'before', 'because', 'since', 'until', 'against', 'between', 'through', 'during', 'above', 'below', 'your', 'yours', 'our', 'ours', 'his', 'her', 'its', 'our', 'are', 'was', 'were', 'been', 'being', 'have', 'has', 'had', 'having', 'would', 'could', 'should', 'will', 'shall', 'may', 'might', 'must', 'need', 'dare', 'a', 'an', 'or', 'but', 'nor', 'so', 'if', 'of', 'in', 'on', 'at', 'by', 'to', 'as', 'it', 'we', 'you', 'me', 'us', 'him', 'he', 'she', 'my', 'is', 'am', 'do', 'does', 'did', 'not', 'no', 'yes', 'just', 'also', 'very', 'much', 'many', 'most', 'more', 'less', 'all', 'any', 'each', 'every', 'some', 'such', 'own', 'same', 'other', 'new', 'now', 'get', 'gets', 'got', 'put', 'puts', 'set', 'sets', 'use', 'uses', 'used', 'using', 'help', 'helps', 'making', 'made', 'make', 'makes', 'like', 'likes', 'way', 'ways', 'thing', 'things', 'people', 'person', 'team', 'teams', 'business', 'businesses', 'company', 'companies', 'customer', 'customers', 'client', 'clients', 'user', 'users', 'instead', 'rather', 'without', 'within', 'across', 'around', 'over', 'under', 'up', 'down', 'out', 'off', 'too', 'both', 'few', 'those', 'these', 'them']);
 
@@ -122,6 +123,19 @@ export default function TaglinelyWidget() {
       .then((j) => { if (j && j.source === 'ai' && Array.isArray(j.candidates) && j.candidates.length) setAi(j.candidates.slice(0, 5)); })
       .catch(() => {});
   }
+
+  // The report the capture card emails: the taglines themselves, each with
+  // the formula it came from, so the recipient can pick rather than admire.
+  const publish = useReport();
+  useEffect(() => {
+    if (!results || !results.length) { publish(null); return; }
+    publish({
+      title: 'Your taglines',
+      headline: results[0] ? results[0].text : null,
+      rows: results.slice(0, 5).map((t, i) => ({ label: `Option ${i + 1} \u00b7 ${t.formula || 'tagline'}`, value: t.text })),
+      tip: results[0] && results[0].lesson ? results[0].lesson : null,
+    });
+  }, [results, publish]);
 
   const Row = (t, i, isAi) => (
     <div key={`${t.text}-${i}`} style={{ padding: '10px 0', borderBottom: '1px solid var(--line)' }}>

@@ -1,5 +1,6 @@
 'use client';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useReport } from '../ReportContext';
 import { parseCSV, num } from '../../lib/parse';
 
 function pick(headers, candidates) {
@@ -147,6 +148,23 @@ export default function ChurnPeekWidget() {
   }
 
   const counts = accts.reduce((m, a) => ({ ...m, [a.grade]: (m[a.grade] || 0) + 1 }), {});
+
+  // The report the capture card emails: the three most at-risk accounts and
+  // why each one scored the way it did.
+  const publish = useReport();
+  useEffect(() => {
+    if (!accts.length) { publish(null); return; }
+    const counts = accts.reduce((m, a) => ({ ...m, [a.grade]: (m[a.grade] || 0) + 1 }), {});
+    publish({
+      title: 'Churn Peek \u2014 your 3 most at-risk accounts',
+      headline: `${rows} rows scored \u00b7 ${counts.High || 0} high, ${counts.Medium || 0} medium, ${counts.Low || 0} low risk`,
+      rows: accts.slice(0, 3).map((a) => ({
+        label: a.name,
+        value: `${a.grade} risk (${a.risk}) \u2014 ${a.topReason || 'no single dominant factor'}`,
+      })),
+      tip: accts[0] && accts[0].topReason ? `Start with ${accts[0].name}: ${accts[0].topReason}.` : null,
+    });
+  }, [accts, rows, publish]);
 
   return (
     <>

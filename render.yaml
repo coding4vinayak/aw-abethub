@@ -46,6 +46,19 @@ services:
       # endpoint (Slack workflow, Zapier, your own service). Blank = off.
       - key: LEAD_NOTIFY_URL
         sync: false
+      # Mail delivery for the promised report email ("one email with your
+      # report"). RESEND_API_KEY is the provider; MAIL_WEBHOOK_URL is the
+      # escape hatch — any endpoint that takes {from, to, subject, html, text}.
+      # Leave both blank and the hub says so to the visitor instead of
+      # claiming a delivery it did not make.
+      - key: RESEND_API_KEY
+        sync: false
+      - key: MAIL_WEBHOOK_URL
+        sync: false
+      - key: MAIL_WEBHOOK_TOKEN
+        sync: false
+      - key: MAIL_FROM
+        value: "Abetworks Hub <hello@abetworks.in>"
       # The hub's own canonical origin, used for links that should stay on the
       # hub — default: https://hub.abetworks.in.
       - key: HUB_URL

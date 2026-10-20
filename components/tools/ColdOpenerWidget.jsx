@@ -1,5 +1,6 @@
 'use client';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useReport } from '../ReportContext';
 
 export default function ColdOpenerWidget() {
   const [url, setUrl] = useState('');
@@ -28,6 +29,19 @@ export default function ColdOpenerWidget() {
       setTimeout(() => setCopied(false), 2000);
     } catch { setErr('Your browser blocked clipboard access — select the text and copy manually.'); }
   }
+
+  // The report the capture card emails: the opener itself, and the phrase it
+  // was grounded in, so the recipient can see it is not a template.
+  const publish = useReport();
+  useEffect(() => {
+    if (!res) { publish(null); return; }
+    publish({
+      title: `Cold Email Opener \u2014 ${res.domain || ''}`.trim(),
+      headline: String(res.opener || '').split('\n')[0],
+      rows: res.phrase ? [{ label: 'Grounded in', value: res.phrase }] : [],
+      tip: res.why || null,
+    });
+  }, [res, publish]);
 
   return (
     <>
