@@ -28,6 +28,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body>
+        <a href="#main-content" className="skip-link">Skip to main content</a>
         <div className="top-accent" aria-hidden="true" />
         <header className="site-header">
           <div className="wrap header-row">
@@ -35,7 +36,7 @@ export default function RootLayout({ children }) {
               <span className="logo-mark">A</span>
               Abetworks <em>Hub</em>
             </Link>
-            <nav className="header-nav">
+            <nav className="header-nav" aria-label="Main navigation">
               <Link href="/#free">Free tools</Link>
               <Link href="/#paid">Premium tools</Link>
               <a className="header-cta" href={`${SUITE_URL}/`} target="_blank" rel="noopener">
@@ -44,8 +45,8 @@ export default function RootLayout({ children }) {
             </nav>
           </div>
         </header>
-        <main className="wrap">{children}</main>
-        <footer className="site-footer">
+        <main id="main-content" className="wrap">{children}</main>
+        <footer className="site-footer" role="contentinfo">
           <div className="wrap">
             <div className="footer-brand">Abetworks <em>Hub</em></div>
             <p className="footer-line">

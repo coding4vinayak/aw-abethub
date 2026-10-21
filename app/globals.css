@@ -1,18 +1,62 @@
 :root {
   --ink: #111827;
   --ink-2: #374151;
-  --ink-3: #6b7280;
-  --line: #e5e7eb;
+  --ink-3: #4b5563; /* was #6b7280 - improved contrast on --bg */
+  --line: #d1d5db; /* was #e5e7eb - improved contrast */
   --bg: #f9fafb;
   --card: #ffffff;
-  --accent: #4f46e5;
-  --accent-soft: #eef2ff;
-  --free: #059669;
+  --accent: #4338ca; /* was #4f46e5 - improved contrast on white */
+  --accent-soft: #e0e7ff;
+  --free: #047857; /* was #059669 - improved contrast on white */
   --free-soft: #ecfdf5;
-  --error: #dc2626;
+  --error: #b91c1c; /* was #dc2626 - improved contrast on white/light */
 }
 
 * { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+/* Skip link for keyboard navigation */
+.skip-link {
+  position: absolute;
+  top: -100%;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--ink);
+  color: #fff;
+  padding: 12px 24px;
+  border-radius: 8px;
+  font-weight: 600;
+  z-index: 1000;
+  text-decoration: none;
+}
+.skip-link:focus {
+  top: 12px;
+  outline: 3px solid var(--accent);
+  outline-offset: 2px;
+}
+
+/* Visible focus styles for all interactive elements */
+:focus-visible {
+  outline: 3px solid var(--accent);
+  outline-offset: 2px;
+}
+
+/* Ensure buttons and links have visible focus */
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible,
+summary:focus-visible {
+  outline: 3px solid var(--accent);
+  outline-offset: 2px;
+}
+
+/* Remove default focus for mouse users, keep for keyboard */
+:focus:not(:focus-visible) {
+  outline: none;
+}
 
 html { scroll-behavior: smooth; }
 
@@ -149,9 +193,9 @@ textarea { min-height: 120px; resize: vertical; font-family: inherit; }
 .footer-row { display: flex; justify-content: space-between; gap: 12px; color: var(--ink-3); font-size: 13px; flex-wrap: wrap; }
 
 /* ---- 2026 brand layer ---- */
-.top-accent { height: 4px; background: linear-gradient(90deg, #4f46e5, #7c3aed 55%, #06b6d4); }
+.top-accent { height: 4px; background: linear-gradient(90deg, #4338ca, #7c3aed 55%, #06b6d4); }
 
-.logo-mark { background: linear-gradient(135deg, #4f46e5, #7c3aed); }
+.logo-mark { background: linear-gradient(135deg, #4338ca, #7c3aed); }
 
 .eyebrow {
   font-size: 11px; font-weight: 800; letter-spacing: .18em; text-transform: uppercase;
@@ -164,8 +208,8 @@ textarea { min-height: 120px; resize: vertical; font-family: inherit; }
 
 .card { box-shadow: 0 1px 2px rgba(17, 24, 39, .04); }
 
-.btn { box-shadow: 0 2px 8px rgba(79, 70, 229, .28); }
-.btn:hover:not(:disabled) { transform: translateY(-1px); box-shadow: 0 4px 14px rgba(79, 70, 229, .34); }
+.btn { box-shadow: 0 2px 8px rgba(67, 56, 202, .28); }
+.btn:hover:not(:disabled) { transform: translateY(-1px); box-shadow: 0 4px 14px rgba(67, 56, 202, .34); }
 .btn { transition: box-shadow .15s, transform .15s; }
 
 .tool-card { border-left: 3px solid transparent; }
