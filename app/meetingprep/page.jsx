@@ -9,8 +9,8 @@ export function generateMetadata() {
     title,
     description,
     alternates: { canonical: { url: '/meetingprep', absolute: false } },
-    openGraph: { title, description, type: 'website', siteName: 'Abetworks Hub', images: ['/og.png'] },
-    twitter: { card: 'summary_large_image', title, description },
+    openGraph: { title, description, type: 'website', siteName: 'Abetworks Hub', images: ['/og/meetingprep'] },
+    twitter: { card: 'summary_large_image', title, description, images: ['/og/meetingprep'] },
   };
 }
 

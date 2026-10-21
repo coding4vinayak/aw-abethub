@@ -6,7 +6,7 @@ export function generateMetadata() {
     description,
     alternates: { canonical: { url: '/privacy', absolute: false } },
     openGraph: { title, description, type: 'website', siteName: 'Abetworks Hub', images: ['/og.png'] },
-    twitter: { card: 'summary_large_image', title, description },
+    twitter: { card: 'summary_large_image', title, description, images: ['/og.png'] },
   };
 }
 
