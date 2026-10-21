@@ -195,7 +195,10 @@ if (!existsSync('.next/BUILD_ID')) {
     assert.equal(csv.status, 200);
     assert.match(csv.headers.get('content-type'), /text\/csv/);
     const text = await csv.text();
-    assert.match(text, /^email,tool,at\n/);
+    // The export carries the consent scope, because "what was agreed" is the
+    // question to answer before sending anything.
+    assert.match(text, /^email,tool,at,consent\n/);
     assert.ok(text.includes(email), 'the export is missing the captured lead');
+    assert.ok(text.includes('report-and-launch-email'), 'the export is missing the consent scope');
   });
 }
