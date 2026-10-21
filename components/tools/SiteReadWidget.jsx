@@ -43,12 +43,24 @@ export default function SiteReadWidget() {
 
   return (
     <>
-      <form onSubmit={run}>
+      <form onSubmit={run} noValidate>
         <label htmlFor="url">Your website URL</label>
         <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap' }}>
-          <input id="url" type="text" placeholder="https://example.com" value={url}
-            onChange={(e) => setUrl(e.target.value)} style={{ flex: '1 1 240px' }} />
-          <button className="btn" disabled={busy || !url.trim()}>{busy ? 'Crawling…' : 'Check now'}</button>
+          <input
+            id="url"
+            type="url"
+            placeholder="https://example.com"
+            value={url}
+            onChange={(e) => setUrl(e.target.value)}
+            style={{ flex: '1 1 240px' }}
+            required
+            aria-describedby="url-hint"
+            disabled={busy}
+          />
+          <span id="url-hint" style={{ visibility: 'hidden', position: 'absolute' }}>Enter a full URL including https://</span>
+          <button className="btn" disabled={busy || !url.trim()} type="submit" aria-busy={busy}>
+            {busy ? 'Crawling…' : 'Check now'}
+          </button>
         </div>
       </form>
 
@@ -69,7 +81,13 @@ export default function SiteReadWidget() {
 
           <h3 style={{ marginTop: 18 }}>Per-engine crawl readiness (from your robots.txt)</h3>
           <table>
-            <thead><tr><th>AI engine</th><th>Status</th><th>Why</th></tr></thead>
+            <thead>
+              <tr>
+                <th scope="col">AI engine</th>
+                <th scope="col">Status</th>
+                <th scope="col">Why</th>
+              </tr>
+            </thead>
             <tbody>
               {res.engines.map((eng) => (
                 <tr key={eng.engine}>
@@ -85,7 +103,13 @@ export default function SiteReadWidget() {
 
           <h3 style={{ marginTop: 18 }}>Signal-by-signal audit</h3>
           <table>
-            <thead><tr><th>Signal</th><th>Status</th><th>What we found</th></tr></thead>
+            <thead>
+              <tr>
+                <th scope="col">Signal</th>
+                <th scope="col">Status</th>
+                <th scope="col">What we found</th>
+              </tr>
+            </thead>
             <tbody>
               {res.signals.map((s) => (
                 <tr key={s.key}>
