@@ -246,3 +246,4 @@ textarea { min-height: 120px; resize: vertical; font-family: inherit; }
 .footer-links { display: inline-flex; gap: 14px; }
 .footer-sibs { font-size: 13px; color: var(--ink-3); margin: 10px 0 0; }
 .footer-sibs a { color: #a5b4fc; }
+
