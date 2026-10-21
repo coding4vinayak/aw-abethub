@@ -11,7 +11,7 @@ import { existsSync, mkdtempSync, readFileSync, rmSync } from 'node:fs';
 import http from 'node:http';
 import { tmpdir } from 'node:os';
 import path from 'node:path';
-import { TOOLS } from '../lib/registry.js';
+import { API_TOOLS, TOOLS } from '../lib/registry.js';
 
 const PORT = 3987;
 const NOTIFY_PORT = 3988;
@@ -104,6 +104,22 @@ if (!existsSync('.next/BUILD_ID')) {
       }
     }
     assert.deepEqual(offenders, [], `links that point nowhere:\n  ${offenders.join('\n  ')}`);
+  });
+
+  test('the index tells the truth about which tools answer over HTTP', async () => {
+    const text = await (await fetch(`${BASE}/llms.txt`)).text();
+    // Every tool that answers over HTTP is named with its path…
+    for (const slug of API_TOOLS) {
+      assert.ok(text.includes(`/api/${slug}`), `${slug} answers over HTTP but the index does not say so`);
+    }
+    // …and the ones that do not are not given a path they do not have.
+    for (const tool of TOOLS.filter((t) => !API_TOOLS.has(t.slug))) {
+      assert.ok(!text.includes(`/api/${tool.slug}`), `${tool.slug} has no API but the index offers one`);
+    }
+    assert.ok(
+      text.includes(`${API_TOOLS.size} of the ${TOOLS.length}`),
+      'the index states how many tools answer over HTTP',
+    );
   });
 
   test('an unknown tool is a real 404, not a hang', async () => {
