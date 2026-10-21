@@ -72,3 +72,32 @@ test('the lead route reports the channel that ran, and the copy follows it', () 
   assert.match(mail, /MAIL_CHANNEL\.HTTP/, 'the transport names the channel that ran');
   assert.match(mail, /logMessage/, 'and has a log fallback that says it was not delivered');
 });
+
+test('the capture box and the privacy page promise the same thing', () => {
+  // One consent, said the same way in both places. They used to disagree: the
+  // box said "one email with your report — no newsletter", and the privacy
+  // page said "the requested report and occasional product emails". A visitor
+  // reading both was told two different things about what they had agreed to,
+  // and the runbook's plan was a five-to-seven email drip.
+  // The JSX wraps lines, so the phrases are compared with the whitespace
+  // flattened — otherwise a promise split across two lines reads as absent.
+  const flat = (src) => src.replace(/\s+/g, ' ');
+  const capture = flat(read('components/EmailCapture.jsx'));
+  const privacy = flat(read('app/privacy/page.jsx'));
+  for (const [name, src] of [['the capture box', capture], ['the privacy page', privacy]]) {
+    assert.match(src, /no newsletter/, `${name} must say there is no newsletter`);
+    assert.match(src, /paid version/, `${name} must name the one other email it may send`);
+  }
+  // A drip may only be mentioned to say it does not exist.
+  assert.ok(!/drip/i.test(capture.replace(/no drip/gi, '')), 'the box may not promise a drip');
+  assert.ok(!/drip/i.test(privacy.replace(/no drip/gi, '')), 'the privacy page may not promise a drip');
+});
+
+test('a captured lead carries the consent it was captured under', () => {
+  // The scope has to travel with the lead, or the ESP has to guess — and a
+  // guess is how a "one email" promise turns into a seven-email drip.
+  const route = read('app/api/lead/route.js');
+  assert.match(route, /consent: 'report-and-launch-email'/, 'the route records the scope');
+  const leads = read('lib/leads.js');
+  assert.match(leads, /'email', 'tool', 'at', 'consent'/, 'the export carries the scope');
+});

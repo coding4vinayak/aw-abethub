@@ -41,7 +41,8 @@ export default function EmailCapture({ tool, toolName, headline, sub }) {
             <h3 className="pass">Report sent ✓</h3>
             <p>
               It’s in your inbox — the result, one fix tip, and a link back to the tool. That’s the
-              one email we promised; there is no newsletter behind it.
+              report you asked for. If the paid version of this tool ever ships, you’ll get one
+              email the day it does — and nothing else: no newsletter, no drip.
             </p>
           </>
         ) : (
@@ -76,8 +77,9 @@ export default function EmailCapture({ tool, toolName, headline, sub }) {
       {state === 'bad' && <p className="error-note">That email doesn’t look right.</p>}
       {state === 'fail' && <p className="error-note">Couldn’t send just now — try again in a moment.</p>}
       <p className="privacy-note">
-        One email with your report
-        {toolName ? ` — ${toolName}` : ''} — no newsletter, no spam. See our{' '}
+        Your report by email
+        {toolName ? ` — ${toolName}` : ''} — and, if the paid version of this tool ever ships, one
+        email the day it does. Nothing else: no newsletter, no drip. See our{' '}
         <a href="/privacy">privacy policy</a>; delete your data anytime at privacy@abetworks.in.
       </p>
     </form>

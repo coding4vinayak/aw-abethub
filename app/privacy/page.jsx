@@ -44,9 +44,11 @@ export default function Privacy() {
 
       <h2 style={H}>Email marketing</h2>
       <p style={P}>
-        Submitting an email means we may send you the requested report and occasional product emails —
-        one-click unsubscribe in every message, or just ask us to forget you. We honor deletion and
-        opt-out requests within 30 days.
+        Submitting an email means we will send you the report you asked for, and — if the paid
+        version of that tool ever ships — one email the day it does. Nothing else: there is no
+        newsletter and no drip, and the consent is recorded on the lead so a later message is
+        within what you agreed to. One-click unsubscribe in every message, or just ask us to forget
+        you. We honor deletion and opt-out requests within 30 days.
       </p>
 
       <h2 style={H}>Your rights (GDPR / DPDP)</h2>
