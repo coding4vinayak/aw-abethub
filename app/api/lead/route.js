@@ -28,7 +28,11 @@ export async function POST(req) {
   const report = sanitizeReport(body.report);
   const toolName = getTool(tool)?.name || tool || 'Your result';
 
-  const lead = { email, tool, at: new Date().toISOString() };
+  // The consent, recorded. The capture box promises the report and — if the
+  // paid version of that tool ships — one email the day it does; nothing else.
+  // A later send has to be able to check what was agreed, so the scope travels
+  // with the lead.
+  const lead = { email, tool, at: new Date().toISOString(), consent: 'report-and-launch-email' };
   if (report) lead.report = report;
 
   try {

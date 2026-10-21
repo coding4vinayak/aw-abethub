@@ -29,13 +29,21 @@ test('a torn last line never hides the leads written before it', async () => {
 });
 
 test('the CSV export is ESP-ready and escapes cells', async () => {
-  assert.equal(leadsCsv([]), 'email,tool,at\n');
+  assert.equal(leadsCsv([]), 'email,tool,at,consent\n');
   const csv = leadsCsv([
-    { email: 'a,b"c@example.com', tool: 'siteread', at: '2026-10-17T00:00:00.000Z' },
+    {
+      email: 'a,b"c@example.com',
+      tool: 'siteread',
+      at: '2026-10-17T00:00:00.000Z',
+      consent: 'report-and-launch-email',
+    },
   ]);
   const [header, row] = csv.trimEnd().split('\n');
-  assert.equal(header, 'email,tool,at');
-  assert.equal(row, '"a,b""c@example.com",siteread,2026-10-17T00:00:00.000Z');
+  assert.equal(header, 'email,tool,at,consent');
+  assert.equal(
+    row,
+    '"a,b""c@example.com",siteread,2026-10-17T00:00:00.000Z,report-and-launch-email',
+  );
 });
 
 test('the token check says yes only to the exact token', () => {
