@@ -79,6 +79,33 @@ if (!existsSync('.next/BUILD_ID')) {
     }
   });
 
+  test('no rendered link points at a /products/ path that does not exist', async () => {
+    // The rendered pages, not the source: a link can be assembled at runtime.
+    // Every abetworks.in link on a page must be a host the fleet deploys, the
+    // company's contact page, or the site itself — never a /products/ path the
+    // marketing site's repository has never had.
+    const allowed = new Set([
+      'abetworks.in', 'www.abetworks.in',
+      'analytics.abetworks.in', 'leadworks.abetworks.in', 'leadgenius.abetworks.in',
+      'abetagent.abetworks.in', 'connect.abetworks.in', 'flow.abetworks.in',
+      'api.abetworks.in', 'hub.abetworks.in', 'pdf.abetworks.in',
+    ]);
+    const pages = ['/', ...TOOLS.map((t) => `/${t.slug}`)];
+    const offenders = [];
+    for (const route of pages) {
+      const html = await (await fetch(`${BASE}${route}`)).text();
+      for (const m of html.matchAll(/href="(https?:\/\/[^"]+)"/g)) {
+        const url = m[1];
+        if (url.includes('/products/')) { offenders.push(`${route} → ${url}`); continue; }
+        const host = new URL(url).hostname;
+        if (host.endsWith('abetworks.in') && !allowed.has(host)) {
+          offenders.push(`${route} → ${url}`);
+        }
+      }
+    }
+    assert.deepEqual(offenders, [], `links that point nowhere:\n  ${offenders.join('\n  ')}`);
+  });
+
   test('an unknown tool is a real 404, not a hang', async () => {
     const res = await fetch(`${BASE}/no-such-tool-xyz`);
     assert.equal(res.status, 404);

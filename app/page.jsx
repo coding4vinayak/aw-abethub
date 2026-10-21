@@ -1,5 +1,6 @@
 import { TOOLS } from '../lib/registry';
 import { SUITE_URL } from '../lib/site';
+import { PRODUCT_HOMES, NUCRM_CONTACT } from '../lib/products';
 
 export function generateMetadata() {
   const title = 'Abetworks Hub — 35 single-feature tools, 5 free forever';
@@ -14,10 +15,13 @@ export function generateMetadata() {
 }
 
 const SUITE = [
-  { name: 'NuCRM', desc: 'The full sales CRM our tools feed into.', href: `${SUITE_URL}/products/nucrm/` },
-  { name: 'LeadGenius', desc: 'Find, verify and enrich outbound leads on autopilot.', href: `${SUITE_URL}/products/leadgenius/` },
-  { name: 'AbetAgent', desc: 'Your cloud AI agent — research, execution, memory.', href: `${SUITE_URL}/products/abetagent/` },
-  { name: 'AbetFlow', desc: 'Automations that wire your whole stack together.', href: `${SUITE_URL}/products/abetflow/` },
+  // Each card goes to the host that actually serves the product. The site's
+  // own repository has no /products/ directory, so the old `${SUITE_URL}/products/…`
+  // links were 404s on the page where a buyer is most likely to click.
+  { name: 'NuCRM', desc: 'The full sales CRM our tools feed into.', href: NUCRM_CONTACT, cta: 'Ask us →' },
+  { name: 'LeadGenius', desc: 'Find, verify and enrich outbound leads on autopilot.', href: PRODUCT_HOMES.leadgenius },
+  { name: 'AbetAgent', desc: 'Your cloud AI agent — research, execution, memory.', href: PRODUCT_HOMES.abetagent },
+  { name: 'AbetFlow', desc: 'Automations that wire your whole stack together.', href: PRODUCT_HOMES.abetflow },
 ];
 
 const FAQS = [
@@ -55,7 +59,7 @@ export default function Home() {
         </p>
         <div className="hero-btns">
           <a className="btn" href="#free">Start with the 5 free tools ↓</a>
-          <a className="btn btn-ghost" href={`${SUITE_URL}/products/`}>See the full suite</a>
+          <a className="btn btn-ghost" href={`${SUITE_URL}/`}>See the Abetworks site</a>
         </div>
         <div className="trust-strip" style={{ justifyContent: 'center', marginTop: 18 }}>
           <span>✓ Real engines, live data</span>
@@ -81,7 +85,7 @@ export default function Home() {
           <a key={s.name} className="suite-card" href={s.href} rel="noopener">
             <strong>{s.name}</strong>
             <span>{s.desc}</span>
-            <em>Explore →</em>
+            <em>{s.cta || 'Explore →'}</em>
           </a>
         ))}
       </div>
