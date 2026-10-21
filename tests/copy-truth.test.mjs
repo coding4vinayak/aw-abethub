@@ -10,6 +10,7 @@
 // the "X paid <verb>" phrasing is banned, ToolShell renders offers only for the
 // free tools, and the index does not advertise a price as current.
 import { test } from 'node:test';
+import { TOOLS } from '../lib/registry.js';
 import assert from 'node:assert/strict';
 import { readdirSync, readFileSync } from 'node:fs';
 
@@ -100,4 +101,18 @@ test('a captured lead carries the consent it was captured under', () => {
   assert.match(route, /consent: 'report-and-launch-email'/, 'the route records the scope');
   const leads = read('lib/leads.js');
   assert.match(leads, /'email', 'tool', 'at', 'consent'/, 'the export carries the scope');
+});
+
+test('every tool page points at its own card', () => {
+  // A page that drifts back to the one static image shares every other tool's
+  // card again, which is the thing this replaced.
+  for (const tool of TOOLS) {
+    const page = read(`app/${tool.slug}/page.jsx`);
+    assert.match(page, new RegExp(`images: \\['/og/${tool.slug}'\\]`), `${tool.slug} must name its own card`);
+  }
+  // The pages that are not tools keep the brand card, because there is no
+  // tool card to name.
+  for (const page of ['app/privacy/page.jsx', 'app/terms/page.jsx']) {
+    assert.match(read(page), /images: \['\/og\.png'\]/, `${page} keeps the brand card`);
+  }
 });

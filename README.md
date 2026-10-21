@@ -88,6 +88,7 @@ use rule-based results. Every one of these is `sync: false` in `render.yaml`.
 | `app/api/<slug>/route.js` | Server engines (DNS, fetch, TLS) — SSRF-guarded via `lib/fetchpage.js` |
 | `lib/leads.js` | Lead store: JSONL append/read, CSV export, token check, notify webhook |
 | `app/api/lead/route.js` | Email capture → `data/leads.json` (+ after-response notify) and the promised report email |
+| `app/og/[tool]/route.tsx` | The share card for each tool — generated, one per tool, with the tier's honest state |
 | `lib/mail.js` | Mail transport — reports which channel ran (provider or log) |
 | `lib/report-email.js` | The report email: bounds, sanitising, and the HTML/text render |
 | `app/api/leads/route.js` | Owner-only read/export of captured leads (LEADS_TOKEN-gated) |

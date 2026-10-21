@@ -122,6 +122,20 @@ if (!existsSync('.next/BUILD_ID')) {
     );
   });
 
+  test('every tool has its own share card, and it is a card', async () => {
+    // One static image used to serve all thirty-five tool pages, so a share of
+    // "AI Visibility Check" showed a card that did not name the tool. Each
+    // page now has its own, generated.
+    for (const tool of TOOLS) {
+      const res = await fetch(`${BASE}/og/${tool.slug}`);
+      assert.equal(res.status, 200, `/og/${tool.slug} answered ${res.status}`);
+      assert.match(res.headers.get('content-type') || '', /image\/png/, `/og/${tool.slug} is not a PNG`);
+    }
+    // A tool that is not in the catalogue has no card.
+    const missing = await fetch(`${BASE}/og/no-such-tool`);
+    assert.equal(missing.status, 404);
+  });
+
   test('an unknown tool is a real 404, not a hang', async () => {
     const res = await fetch(`${BASE}/no-such-tool-xyz`);
     assert.equal(res.status, 404);
